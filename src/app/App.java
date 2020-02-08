@@ -7,25 +7,37 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class App extends Application implements EventHandler<ActionEvent> {
+public class App extends Application {
 
-    Button button;
+    Stage window;
+    Scene one, two;
 
     @Override
     public void start(Stage stage) {
-        stage.setTitle("Dictionary");
-        button = new Button("Words");
+        window = stage;
 
-        button.setOnAction(this);
+        Label l1 = new Label("Sup, y'all've arrived at the first scene");
+        Button b1 = new Button("Now go to the second scene");
+        b1.setOnAction(e -> window.setScene(two));
 
-        StackPane layout = new StackPane();
-        layout.getChildren().add(button);
-        
-        Scene scene = new Scene(layout, 300, 300);
-        stage.setScene(scene);
-        stage.show();
+        VBox layout1 = new VBox(20);
+        layout1.getChildren().addAll(l1, b1);
+        one = new Scene(layout1, 300, 300);
+
+        Label l2 = new Label("Okay, now go back nothing to see here");
+        Button b2 = new Button("Leave");
+        b2.setOnAction(e -> window.setScene(one));
+
+        VBox layout2 = new VBox(20);
+        layout2.getChildren().addAll(l2, b2);
+        two = new Scene(layout2, 600, 600);
+
+        window.setScene(one);
+        window.setTitle("Learning under construction");
+        window.show();
 
         // String javaVersion = System.getProperty("java.version");
         // String javafxVersion = System.getProperty("javafx.version");
@@ -34,13 +46,6 @@ public class App extends Application implements EventHandler<ActionEvent> {
         // Scene scene = new Scene(new StackPane(testVar), 640, 480);
         // stage.setScene(scene);
         // stage.show();
-    }
-
-    @Override
-    public void handle (ActionEvent event) {
-        if (event.getSource() == button) {
-            System.out.println("Hello!");
-        }
     }
 
     public static void main(String[] args) {
