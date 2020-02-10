@@ -1,5 +1,6 @@
 package app;
 
+import gson.Read;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -57,6 +58,7 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch(args);
+        Read.jsonToWord();
     }
 
 }
