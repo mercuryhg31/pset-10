@@ -31,6 +31,13 @@ public class App extends Application {
         Button b2 = new Button("Leave");
         b2.setOnAction(e -> window.setScene(one));
 
+        // b2.setOnAction(new EventHandler<ActionEvent>() {
+        //     @Override
+        //     public void handle(ActionEvent event) {
+        //         window.setScene(one);
+        //     }
+        // });
+
         VBox layout2 = new VBox(20);
         layout2.getChildren().addAll(l2, b2);
         two = new Scene(layout2, 600, 600);

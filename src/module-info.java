@@ -7,6 +7,8 @@ module dictionary {
 	requires javafx.swing;
 	requires javafx.swt;
 	requires javafx.web;
+
+	requires com.google.gson;
 	
 	exports app;
 }
