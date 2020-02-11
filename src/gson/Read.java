@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 import com.google.gson.*;
+import org.json.simple.*;
 
 import dict.Word;
 

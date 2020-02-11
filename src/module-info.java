@@ -9,6 +9,7 @@ module dictionary {
 	requires javafx.web;
 
 	requires com.google.gson;
+	requires json.simple;
 	
 	exports app;
 }
