@@ -20,7 +20,7 @@ public class App {
     }
 }
 
-/*
+/* ///////////////////////////////////// NOTES ////////////////////////
 // SERIALIZATION (this words btw)
 List<Definition> defs = new ArrayList<Definition>();
 defs.add(new Definition("hi2", "hi3"));
@@ -36,12 +36,34 @@ ants.add("hi9");
 
 System.out.println(new Gson().toJson(new Word("hi", defs, syns, ants)));
 
+
+
+// SERIALIZING ARRAY OF WORDS (this also works)
+List<Definition> defs = new ArrayList<Definition>();
+defs.add(new Definition("hi2", "hi3"));
+defs.add(new Definition("hi4", "hi5"));
+
+List<String> syns = new ArrayList<String>();
+syns.add("hi6");
+syns.add("hi7");
+
+List<String> ants = new ArrayList<String>();
+ants.add("hi8");
+ants.add("hi9");
+
+List<Word> words = new ArrayList<Word>();
+words.add(new Word("hi00", defs, syns, ants));
+words.add(new Word("hi01", defs, syns, ants));
+words.add(new Word("hi02", defs, syns, ants));
+
+System.out.println(new Gson().toJson(words));
+
 */
 
 
 
 
-/*
+/* //////////////////////////////////////////////// JAVA FX APP LEARNING ////////////////////////
 
 public class App extends Application {
 
