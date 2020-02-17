@@ -1,6 +1,5 @@
 package dict;
 
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -8,6 +7,7 @@ import com.google.gson.Gson;
 
 public class Word {
 
+    private static String filePath = "Dictionary/words/words.json"; // alter to from where the program is being run
     private static Word[] words = readJSON();
 
     private String word;
@@ -39,10 +39,7 @@ public class Word {
     }
 
     private static Word[] readJSON() {
-        String filePath = "Dictionary/words/words.json"; // alter to from where the program is being run
         try {
-            File file = new File(filePath);
-            System.out.println(file.getAbsolutePath());
             return new Gson().fromJson(new FileReader(filePath), Word[].class);
         } catch (IOException e) {
             e.printStackTrace();
