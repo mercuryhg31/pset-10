@@ -12,4 +12,5 @@ module dictionary {
 	requires json.simple;
 	
 	exports app;
+	opens dict;
 }

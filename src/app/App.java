@@ -1,6 +1,6 @@
 package app;
 
-import gson.Read;
+import dict.Word;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,6 +10,20 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+public class App {
+    public static void main(String[] args) {
+        Word[] words = Word.getWords();
+        for (Word word : words) {
+            String[] ants = word.getSynonyms();
+            for (String ant : ants) {
+                System.out.print(ant);
+            }
+        }
+    }
+}
+
+/*
 
 public class App extends Application {
 
@@ -58,7 +72,12 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch(args);
-        Read.jsonToWord();
+        Word[] words = Word.getWords();
+        for (Word word : words) {
+            System.out.println(word.getWord());
+        }
     }
 
 }
+
+*/
