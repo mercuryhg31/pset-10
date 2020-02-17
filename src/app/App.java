@@ -1,27 +1,45 @@
 package app;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gson.Gson;
+
 import dict.Word;
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import dict.Word.Definition;
 
 public class App {
     public static void main(String[] args) {
-        Word[] words = Word.getWords();
+        List<Word> words = Word.getWords();
         for (Word word : words) {
-            String[] ants = word.getSynonyms();
-            for (String ant : ants) {
-                System.out.print(ant);
+            List<Definition> defs = word.getDefinitions();
+            for (Definition def : defs) {
+                System.out.println(def.getDefinition());
             }
         }
     }
 }
+
+/*
+// SERIALIZATION (this words btw)
+List<Definition> defs = new ArrayList<Definition>();
+defs.add(new Definition("hi2", "hi3"));
+defs.add(new Definition("hi4", "hi5"));
+
+List<String> syns = new ArrayList<String>();
+syns.add("hi6");
+syns.add("hi7");
+
+List<String> ants = new ArrayList<String>();
+ants.add("hi8");
+ants.add("hi9");
+
+System.out.println(new Gson().toJson(new Word("hi", defs, syns, ants)));
+
+*/
+
+
+
 
 /*
 
