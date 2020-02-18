@@ -58,6 +58,9 @@ words.add(new Word("hi02", defs, syns, ants));
 
 System.out.println(new Gson().toJson(words));
 
+//////////////////// pretty printing ////////////////
+Gson gson = new GsonBuilder().setPrettyPrinting().create(); <-- to keep it in tree structure
+
 */
 
 

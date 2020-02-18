@@ -3,6 +3,7 @@ package dict;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -46,6 +47,36 @@ public class Word {
         this.definitions = definitions;
         this.synonyms = synonyms;
         this.antonyms = antonyms;
+    }
+
+    public static void addWord(Word word) {
+        words.add(word);
+    }
+
+    public static int deleteWord(String query) {
+        for (int i = 0; i < words.size(); i++) {
+            if (words.get(i).getWord() == query) {
+                words.remove(i);
+                return 0;
+            }
+        } return 1;
+    }
+
+    public static Word findWord(String query) {
+        for (Word word : words) {
+            if (word.getWord() == query) {
+                return word;
+            }
+        } return null;
+    }
+
+    public static List<Word> findMatches(String query) {
+        List<Word> output = new ArrayList<Word>();
+        for (Word word : words) {
+            if (word.getWord().contains(query)) {
+                output.add(word);
+            }
+        } return null;
     }
 
     public String getWord() {
@@ -93,7 +124,7 @@ public class Word {
         // return null;
     }
 
-    public static void resetWords() {
+    public static void resetWords() { // TODO make instead to write words list to words.json
         words = readJSON();
     }
 
