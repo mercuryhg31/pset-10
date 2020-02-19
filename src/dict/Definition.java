@@ -1,7 +1,5 @@
 package dict;
 
-import java.util.List;
-
 public class Definition {
     private String def;
     private String pos;
