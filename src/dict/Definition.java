@@ -1,19 +1,21 @@
-// package dict;
+package dict;
 
-// public class Definition {
-//     private String def;
-//     private String pos;
+import java.util.List;
 
-//     public Definition(String def, String pos) {
-//         this.def = def;
-//         this.pos = pos;
-//     }
+public class Definition {
+    private String def;
+    private String pos;
 
-//     public String getDefinition() {
-//         return def;
-//     }
+    public Definition(String def, String pos) {
+        this.def = def;
+        this.pos = pos;
+    }
 
-//     public String getPOS() {
-//         return pos;
-//     }
-// }
+    public String getDefinition() {
+        return def;
+    }
+
+    public String getPOS() {
+        return pos;
+    }
+}

@@ -3,10 +3,7 @@ package app;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.Gson;
-
-import dict.Word;
-import dict.Word.Definition;
+import dict.*;
 
 public class App {
     public static void main(String[] args) {

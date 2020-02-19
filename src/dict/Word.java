@@ -17,30 +17,13 @@ import com.google.gson.JsonParseException;
 public class Word {
 
     private static String filePath = "Dictionary/words/words.json"; // alter to from where the program is being run
+    // Reader reader = new FileReader(System.getProperty("user.dir") + File.separator + "words.json");
     private static List<Word> words = readJSON();
 
     private String word;
     private List<Definition> definitions;
     private List<String> synonyms;
     private List<String> antonyms;
-
-    public static class Definition {
-        private String def;
-        private String pos;
-
-        public Definition(String def, String pos) {
-            this.def = def;
-            this.pos = pos;
-        }
-
-        public String getDefinition() {
-            return def;
-        }
-
-        public String getPOS() {
-            return pos;
-        }
-    }
 
     public Word(String word, List<Definition> definitions, List<String> synonyms, List<String> antonyms) {
         this.word = word;
@@ -103,25 +86,6 @@ public class Word {
             e.printStackTrace();
             return null;
         }
-
-        // JsonDeserializer<Word> deserializer = new JsonDeserializer<Word>() {
-        //     @Override
-        //     public Word deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
-
-        //         JsonObject jsonObject = json.getAsJsonObject();
-        //         JsonObject wholeDef = (JsonObject) jsonObject.get("definitions");
-
-        //         Definition definition = new Definition(
-        //             wholeDef.get("definiton").getAsString(),
-        //             wholeDef.get("partOfSpeech").getAsString()
-        //         );
-
-        //         return new Word(
-        //             jsonObject.get("")
-        //         );
-        //     }
-        // };
-        // return null;
     }
 
     public static void resetWords() { // TODO make instead to write words list to words.json
