@@ -7,9 +7,9 @@ import dict.*;
 
 public class App {
     public static void main(String[] args) {
-        List<Word> words = Word.getWords();
+        ArrayList<Word> words = Word.getWords();
         for (Word word : words) {
-            List<Definition> defs = word.getDefinitions();
+            ArrayList<Definition> defs = word.getDefinitions();
             for (Definition def : defs) {
                 System.out.println(def.getDefinition());
             }
@@ -19,15 +19,15 @@ public class App {
 
 /* ///////////////////////////////////// NOTES ////////////////////////
 // SERIALIZATION (this words btw)
-List<Definition> defs = new ArrayList<Definition>();
+ArrayList<Definition> defs = new ArrayArrayList<Definition>();
 defs.add(new Definition("hi2", "hi3"));
 defs.add(new Definition("hi4", "hi5"));
 
-List<String> syns = new ArrayList<String>();
+ArrayList<String> syns = new ArrayArrayList<String>();
 syns.add("hi6");
 syns.add("hi7");
 
-List<String> ants = new ArrayList<String>();
+ArrayList<String> ants = new ArrayArrayList<String>();
 ants.add("hi8");
 ants.add("hi9");
 
@@ -36,19 +36,19 @@ System.out.println(new Gson().toJson(new Word("hi", defs, syns, ants)));
 
 
 // SERIALIZING ARRAY OF WORDS (this also works)
-List<Definition> defs = new ArrayList<Definition>();
+ArrayList<Definition> defs = new ArrayArrayList<Definition>();
 defs.add(new Definition("hi2", "hi3"));
 defs.add(new Definition("hi4", "hi5"));
 
-List<String> syns = new ArrayList<String>();
+ArrayList<String> syns = new ArrayArrayList<String>();
 syns.add("hi6");
 syns.add("hi7");
 
-List<String> ants = new ArrayList<String>();
+ArrayList<String> ants = new ArrayArrayList<String>();
 ants.add("hi8");
 ants.add("hi9");
 
-List<Word> words = new ArrayList<Word>();
+ArrayList<Word> words = new ArrayArrayList<Word>();
 words.add(new Word("hi00", defs, syns, ants));
 words.add(new Word("hi01", defs, syns, ants));
 words.add(new Word("hi02", defs, syns, ants));
