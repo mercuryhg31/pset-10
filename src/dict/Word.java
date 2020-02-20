@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import com.google.gson.Gson;
 
@@ -11,14 +12,14 @@ public class Word {
 
     private static String filePath = "Dictionary/words/words.json"; // alter to from where the program is being run
     // Reader reader = new FileReader(System.getProperty("user.dir") + File.separator + "words.json");
-    private static ArrayList<Word> words = readJSON();
+    private static List<Word> words = readJSON();
 
     private String word;
-    private ArrayList<Definition> definitions;
-    private ArrayList<String> synonyms;
-    private ArrayList<String> antonyms;
+    private List<Definition> definitions;
+    private List<String> synonyms;
+    private List<String> antonyms;
 
-    public Word(String word, ArrayList<Definition> definitions, ArrayList<String> synonyms, ArrayList<String> antonyms) {
+    public Word(String word, List<Definition> definitions, List<String> synonyms, List<String> antonyms) {
         this.word = word;
         this.definitions = definitions;
         this.synonyms = synonyms;
@@ -46,8 +47,8 @@ public class Word {
         } return null;
     }
 
-    public static ArrayList<Word> findMatches(String query) {
-        ArrayList<Word> output = new ArrayList<Word>();
+    public static List<Word> findMatches(String query) {
+        List<Word> output = new ArrayList<Word>();
         for (Word word : words) {
             if (word.getWord().contains(query)) {
                 output.add(word);
@@ -59,22 +60,22 @@ public class Word {
         return word;
     }
 
-    public ArrayList<Definition> getDefinitions() {
+    public List<Definition> getDefinitions() {
         return definitions;
     }
 
-    public ArrayList<String> getSynonyms() {
+    public List<String> getSynonyms() {
         return synonyms;
     }
 
-    public ArrayList<String> getAntonyms() {
+    public List<String> getAntonyms() {
         return antonyms;
     }
 
-    private static ArrayList<Word> readJSON() {
+    private static List<Word> readJSON() {
         try {
             Word[] temp = new Gson().fromJson(new FileReader(filePath), Word[].class);
-            return new ArrayList<>(Arrays.asList(temp));
+            return Arrays.asList(temp);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -85,7 +86,13 @@ public class Word {
         words = readJSON();
     }
 
-    public static ArrayList<Word> getWords() {
+    // public void setJSON() {
+    //     try {
+
+    //     }
+    // }
+
+    public static List<Word> getWords() {
         return words;
     }
 }

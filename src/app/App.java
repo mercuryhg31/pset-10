@@ -6,27 +6,21 @@ import dict.*;
 
 public class App {
     public static void main(String[] args) {
-        ArrayList<Word> words = Word.getWords();
-        for (Word word : words) {
-            ArrayList<Definition> defs = word.getDefinitions();
-            for (Definition def : defs) {
-                System.out.println(def.getDefinition());
-            }
-        }
+        
     }
 }
 
 /* ///////////////////////////////////// NOTES ////////////////////////
 // SERIALIZATION (this words btw)
-ArrayList<Definition> defs = new ArrayArrayList<Definition>();
+List<Definition> defs = new ArrayList<Definition>();
 defs.add(new Definition("hi2", "hi3"));
 defs.add(new Definition("hi4", "hi5"));
 
-ArrayList<String> syns = new ArrayArrayList<String>();
+List<String> syns = new ArrayList<String>();
 syns.add("hi6");
 syns.add("hi7");
 
-ArrayList<String> ants = new ArrayArrayList<String>();
+List<String> ants = new ArrayList<String>();
 ants.add("hi8");
 ants.add("hi9");
 
@@ -35,19 +29,19 @@ System.out.println(new Gson().toJson(new Word("hi", defs, syns, ants)));
 
 
 // SERIALIZING ARRAY OF WORDS (this also works)
-ArrayList<Definition> defs = new ArrayArrayList<Definition>();
+List<Definition> defs = new ArrayList<Definition>();
 defs.add(new Definition("hi2", "hi3"));
 defs.add(new Definition("hi4", "hi5"));
 
-ArrayList<String> syns = new ArrayArrayList<String>();
+List<String> syns = new ArrayList<String>();
 syns.add("hi6");
 syns.add("hi7");
 
-ArrayList<String> ants = new ArrayArrayList<String>();
+List<String> ants = new ArrayList<String>();
 ants.add("hi8");
 ants.add("hi9");
 
-ArrayList<Word> words = new ArrayArrayList<Word>();
+List<Word> words = new ArrayList<Word>();
 words.add(new Word("hi00", defs, syns, ants));
 words.add(new Word("hi01", defs, syns, ants));
 words.add(new Word("hi02", defs, syns, ants));

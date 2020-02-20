@@ -1,19 +1,19 @@
 package dict;
 
 public class Definition {
-    private String def;
-    private String pos;
+    private String definition;
+    private String partOfSpeech;
 
     public Definition(String def, String pos) {
-        this.def = def;
-        this.pos = pos;
+        this.definition = def;
+        this.partOfSpeech = pos;
     }
 
     public String getDefinition() {
-        return def;
+        return definition;
     }
 
     public String getPOS() {
-        return pos;
+        return partOfSpeech;
     }
 }
