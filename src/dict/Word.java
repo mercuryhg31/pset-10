@@ -13,14 +13,14 @@ import com.google.gson.GsonBuilder;
 public class Word {
 
     private static String filePath = "Dictionary/words/words.json"; // alter to from where the program is being run
-    private static List<Word> words = readJSON();
+    private static ArrayList<Word> words = readJSON();
 
     private String word;
-    private List<Definition> definitions;
-    private List<String> synonyms;
-    private List<String> antonyms;
+    private ArrayList<Definition> definitions;
+    private ArrayList<String> synonyms;
+    private ArrayList<String> antonyms;
 
-    public Word(String word, List<Definition> definitions, List<String> synonyms, List<String> antonyms) {
+    public Word(String word, ArrayList<Definition> definitions, ArrayList<String> synonyms, ArrayList<String> antonyms) {
         this.word = word;
         this.definitions = definitions;
         this.synonyms = synonyms;
@@ -28,22 +28,30 @@ public class Word {
     }
 
     public static void addWord(Word word) {
+        if (findWord(word.getWord()) != null) {
+            System.out.println("\nCannot create duplicate word.\n");
+            return;
+        }
         words.add(word);
+        System.out.println("\nWord added successfully.\n");
     }
 
     /**
      * Finds index of word that matches query string and deletes object at index.
      * 
      * @param query
-     * @return 0 (successful) or 1 (unsuccessful)
+     * @return if error occurred
      */
-    public static int deleteWord(String query) {
+    public static boolean deleteWord(String query) {
         for (int i = 0; i < words.size(); i++) {
-            if (words.get(i).getWord() == query) {
+            if (words.get(i).getWord().equals(query)) {
                 words.remove(i);
-                return 0;
+                System.out.println("\nWord deleted successfully.\n");
+                return false;
             }
-        } return 1;
+        }
+        System.out.println("\nWord deletion unsuccessful.\n");
+        return true;
     }
 
     /**
@@ -54,7 +62,7 @@ public class Word {
      */
     public static Word findWord(String query) {
         for (Word word : words) {
-            if (word.getWord() == query) {
+            if (word.getWord().equals(query)) {
                 return word;
             }
         } return null;
@@ -64,37 +72,37 @@ public class Word {
      * Finds words that contain query string.
      * 
      * @param query
-     * @return List<Word> of similar words to query
+     * @return ArrayList<Word> of similar words to query
      */
-    public static List<Word> findMatches(String query) {
-        List<Word> output = new ArrayList<Word>();
+    public static ArrayList<Word> findMatches(String query) {
+        ArrayList<Word> output = new ArrayList<Word>();
         for (Word word : words) {
             if (word.getWord().contains(query)) {
                 output.add(word);
             }
-        } return null;
+        } return output;
     }
 
     public String getWord() {
         return word;
     }
 
-    public List<Definition> getDefinitions() {
+    public ArrayList<Definition> getDefinitions() {
         return definitions;
     }
 
-    public List<String> getSynonyms() {
+    public ArrayList<String> getSynonyms() {
         return synonyms;
     }
 
-    public List<String> getAntonyms() {
+    public ArrayList<String> getAntonyms() {
         return antonyms;
     }
 
-    private static List<Word> readJSON() {
+    private static ArrayList<Word> readJSON() {
         try {
             Word[] temp = new Gson().fromJson(new FileReader(filePath), Word[].class);
-            return Arrays.asList(temp);
+            return new ArrayList<Word>(Arrays.asList(temp));
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -105,7 +113,7 @@ public class Word {
         words = readJSON();
     }
 
-    public void writeJSON() {
+    public static void writeJSON() {
         try {
             FileWriter write = new FileWriter(filePath);
             write.write(new GsonBuilder().setPrettyPrinting().create().toJson(Word.getWords()));
@@ -117,7 +125,7 @@ public class Word {
         }
     }
 
-    public static List<Word> getWords() {
+    public static ArrayList<Word> getWords() {
         return words;
     }
 }
