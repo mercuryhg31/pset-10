@@ -1,17 +1,18 @@
 package dict;
 
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class Word {
 
     private static String filePath = "Dictionary/words/words.json"; // alter to from where the program is being run
-    // Reader reader = new FileReader(System.getProperty("user.dir") + File.separator + "words.json");
     private static List<Word> words = readJSON();
 
     private String word;
@@ -30,6 +31,12 @@ public class Word {
         words.add(word);
     }
 
+    /**
+     * Finds index of word that matches query string and deletes object at index.
+     * 
+     * @param query
+     * @return 0 (successful) or 1 (unsuccessful)
+     */
     public static int deleteWord(String query) {
         for (int i = 0; i < words.size(); i++) {
             if (words.get(i).getWord() == query) {
@@ -39,6 +46,12 @@ public class Word {
         } return 1;
     }
 
+    /**
+     * Finds word object that matches query string.
+     * 
+     * @param query
+     * @return Word matching query string
+     */
     public static Word findWord(String query) {
         for (Word word : words) {
             if (word.getWord() == query) {
@@ -47,6 +60,12 @@ public class Word {
         } return null;
     }
 
+    /**
+     * Finds words that contain query string.
+     * 
+     * @param query
+     * @return List<Word> of similar words to query
+     */
     public static List<Word> findMatches(String query) {
         List<Word> output = new ArrayList<Word>();
         for (Word word : words) {
@@ -82,15 +101,21 @@ public class Word {
         }
     }
 
-    public static void resetWords() { // TODO make instead to write words list to words.json
+    public static void resetWords() { // may be unnecessary
         words = readJSON();
     }
 
-    // public void setJSON() {
-    //     try {
-
-    //     }
-    // }
+    public void writeJSON() {
+        try {
+            FileWriter write = new FileWriter(filePath);
+            write.write(new GsonBuilder().setPrettyPrinting().create().toJson(Word.getWords()));
+            write.close();
+            System.out.println("\nSaving data successful.\n");
+        } catch (IOException e) {
+            System.out.println("\nSaving data unsuccessful.\n");
+            e.printStackTrace();
+        }
+    }
 
     public static List<Word> getWords() {
         return words;

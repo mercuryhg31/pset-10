@@ -1,8 +1,9 @@
 package app;
 
-import java.util.ArrayList;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-import dict.*;
+import dict.Word;
 
 public class App {
     public static void main(String[] args) {
