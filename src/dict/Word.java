@@ -88,8 +88,6 @@ public class Word {
                 sorted.add(words.get(i).getWord().indexOf(query));
             }
         } Collections.sort(sorted);
-        // int limit = matches.size();
-        // for (int j = 0; j < limit; j++) {
         while (matches.size() > 0) {
             for (int i = 0; i < sort.size(); i++) {
                 if (sorted.get(0) == sort.get(i)) {
@@ -145,12 +143,10 @@ public class Word {
         for (Word word : un) {
             deux.add(word.getWord());
         } Collections.sort(deux);
-
         ArrayList<Word> trois = new ArrayList<Word>();
         for (int i = 0; i < deux.size(); i++) {
             for (int j = 0; j < un.size(); j++) {
                 if (deux.get(i).equals(un.get(j).getWord())) {
-                    System.out.println(un.get(j).getWord());
                     trois.add(un.get(j));
                     break;
                 }
