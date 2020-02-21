@@ -1,16 +1,15 @@
 package app;
 
-import java.util.List;
-import java.util.ArrayList;
-
-import dict.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
-
-import javax.swing.*; // TODO is this swing?
 
 public class App extends Application {
 
@@ -32,16 +31,39 @@ public class App extends Application {
     }
 
     void setLeftFrame() {
-        StackPane left = new StackPane();
+        GridPane left = new GridPane();
+        left.setGridLinesVisible(true);
 
-        left.getChildren().add(new Label("hi left"));
+        ColumnConstraints col1 = new ColumnConstraints(); col1.setPercentWidth(50);
+        ColumnConstraints col2 = new ColumnConstraints(); col2.setPercentWidth(50);
+        left.getColumnConstraints().addAll(col1, col2);
+
+        // RowConstraints row1 = new RowConstraints();
+        // RowConstraints row2 = new RowConstraints();
+        // left.getRowConstraints().addAll(row1, row2);
+
+        Button add = new Button("Add");
+        Button remove = new Button("Remove");
+
+        TextField searchBox = new TextField("Search");
+        searchBox.setOnKeyTyped(keyEvent -> {
+            // TODO get matches of searchBox.getValue() here
+        });
+
+        GridPane.setConstraints(add, 0, 0, 2, 1);
+        GridPane.setConstraints(remove, 1, 0, 1, 1);
+        GridPane.setConstraints(searchBox, 0, 1, 2, 1); // Node, colIdx, rowIdx, colSpan, rowSpan
+
+        left.getChildren().addAll(add);
 
         setup.setLeft(left);
     }
 
     void setCenterFrame() {
-        StackPane center = new StackPane();
-        center.getChildren().add(new Label("hi center"));
+        GridPane center = new GridPane();
+        center.setGridLinesVisible(true);
+
+        center.getChildren().addAll(new Label("hi center"));
 
         setup.setCenter(center);
     }
