@@ -10,6 +10,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import javax.swing.*; // TODO is this swing?
+
 public class App {
     public static void main(String[] args) {
         ArrayList<Definition> defs = new ArrayList<Definition>();
@@ -28,9 +30,9 @@ public class App {
         Word.addWord(word);
         Word.writeJSON();
 
-        ArrayList<Word> matches = Word.findMatches("pr");
+        ArrayList<Word> matches = Word.findMatches("ui");
         for (Word wyrd : matches) {
-            System.out.println("Matches with pr : " + wyrd.getWord());
+            System.out.println("Matches with query : " + wyrd.getWord());
         }
 
         Word.deleteWord("hi");

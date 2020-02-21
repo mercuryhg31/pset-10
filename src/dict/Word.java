@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -33,6 +33,7 @@ public class Word {
             return;
         }
         words.add(word);
+        words = sortWords(words);
         System.out.println("\nWord added successfully.\n");
     }
 
@@ -70,15 +71,33 @@ public class Word {
 
     /**
      * Finds words that contain query string.
+     * <p> 2/20/20 19:19 - now ordered by relevance to query (this is super annoying to do)</p>
      * 
      * @param query
      * @return ArrayList<Word> of similar words to query
      */
     public static ArrayList<Word> findMatches(String query) {
+        ArrayList<Word> matches = new ArrayList<Word>();
+        ArrayList<Integer> sort = new ArrayList<Integer>();
+        ArrayList<Integer> sorted = new ArrayList<Integer>();
         ArrayList<Word> output = new ArrayList<Word>();
-        for (Word word : words) {
-            if (word.getWord().contains(query)) {
-                output.add(word);
+        for (int i = 0; i < words.size(); i++) {
+            if (words.get(i).getWord().contains(query)) {
+                matches.add(words.get(i));
+                sort.add(words.get(i).getWord().indexOf(query));
+                sorted.add(words.get(i).getWord().indexOf(query));
+            }
+        } Collections.sort(sorted);
+        // int limit = matches.size();
+        // for (int j = 0; j < limit; j++) {
+        while (matches.size() > 0) {
+            for (int i = 0; i < sort.size(); i++) {
+                if (sorted.get(0) == sort.get(i)) {
+                    output.add(matches.get(i));
+                    sorted.remove(0);
+                    sort.remove(i);
+                    matches.remove(i);
+                }
             }
         } return output;
     }
@@ -99,14 +118,44 @@ public class Word {
         return antonyms;
     }
 
+    /**
+     * Returns all words from words.json as ArrayList of Word objects
+     * Now sorted alphabetically because it means other stuff gets automatically alphabetically sorted, yipee
+     * 
+     * @return
+     */
     private static ArrayList<Word> readJSON() {
         try {
             Word[] temp = new Gson().fromJson(new FileReader(filePath), Word[].class);
-            return new ArrayList<Word>(Arrays.asList(temp));
+            return sortWords(new ArrayList<Word>(Arrays.asList(temp)));
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * Takes ArrayList of Word objects and returns them sorted alphabetically
+     * 
+     * @param un
+     * @return alphabetically sorted ArrayList of Word objects
+     */
+    public static ArrayList<Word> sortWords(ArrayList<Word> un) {
+        ArrayList<String> deux = new ArrayList<String>();
+        for (Word word : un) {
+            deux.add(word.getWord());
+        } Collections.sort(deux);
+
+        ArrayList<Word> trois = new ArrayList<Word>();
+        for (int i = 0; i < deux.size(); i++) {
+            for (int j = 0; j < un.size(); j++) {
+                if (deux.get(i).equals(un.get(j).getWord())) {
+                    System.out.println(un.get(j).getWord());
+                    trois.add(un.get(j));
+                    break;
+                }
+            }
+        } return trois;
     }
 
     public static void resetWords() { // may be unnecessary
