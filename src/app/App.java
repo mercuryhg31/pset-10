@@ -1,6 +1,11 @@
 package app;
 
+import java.util.ArrayList;
+
+import dict.*;
 import javafx.application.Application;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -45,16 +50,36 @@ public class App extends Application {
         Button add = new Button("Add");
         Button remove = new Button("Remove");
 
-        TextField searchBox = new TextField("Search");
-        searchBox.setOnKeyTyped(keyEvent -> {
-            // TODO get matches of searchBox.getValue() here
+        // TextField search = new TextField();
+        // search.setPromptText("Search");
+        // search.setOnKeyTyped(keyEvent -> {
+        //     // TODO get matches of searchBox.getValue() here
+        //     System.out.println(Word.findMatches(search.getText()));
+        // });
+        // search.textProperty().addListener(new ChangeListener<String>() {
+        //     @Override public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+        //         clearButton.setVisible(search.getText().length() != 0);
+        //     }
+        // });
+
+        // TextField search =  new TextField();
+        // search.setPromptText("Search");
+        // search.setOnKeyReleased(e -> {
+        //     search.textProperty().addListener((observableValue, oldValue, newValue) -> {
+        //         filteredData.
+        //     });
+        // });
+
+        TextField search = new TextField("Search");
+        search.setOnAction(e -> {
+            System.out.println(Word.findMatches(search.getText()));
         });
 
-        GridPane.setConstraints(add, 0, 0, 2, 1);
-        GridPane.setConstraints(remove, 1, 0, 1, 1);
-        GridPane.setConstraints(searchBox, 0, 1, 2, 1); // Node, colIdx, rowIdx, colSpan, rowSpan
+        GridPane.setConstraints(add, 0, 0, 1, 1, HPos.CENTER, VPos.CENTER);
+        GridPane.setConstraints(remove, 1, 0, 1, 1, HPos.CENTER, VPos.CENTER);
+        GridPane.setConstraints(search, 0, 1, 2, 1, HPos.CENTER, VPos.CENTER); // Node, colIdx, rowIdx, colSpan, rowSpan
 
-        left.getChildren().addAll(add);
+        left.getChildren().addAll(add, remove, search);
 
         setup.setLeft(left);
     }
@@ -92,7 +117,7 @@ public class App extends Application {
 //         Word.addWord(word);
 //         Word.writeJSON();
 
-//         ArrayList<Word> matches = Word.findMatches("a");
+//         ArrayList<Word> matches = Word.findMatches("sav");
 //         for (Word wyrd : matches) {
 //             System.out.println("Matches with query : " + wyrd.getWord());
 //         }
