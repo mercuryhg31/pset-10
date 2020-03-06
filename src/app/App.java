@@ -1,53 +1,112 @@
 package app;
 
-import java.awt.GridLayout;
-import java.awt.BorderLayout;
+import java.awt.EventQueue;
 
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+
+import dict.Word;
+
+import javax.swing.JCheckBox;
+import javax.swing.JScrollBar;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class App {
 
-    public App() {
-        JFrame frame = new JFrame("Desktop Dictionary");
-        
-        JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createEmptyBorder(0, 100, 0, 0));
-        panel.setLayout(new GridLayout());
-        
-        frame.add(panel, BorderLayout.CENTER);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
+	private JFrame frame;
+	private JTextField search;
 
-    public static void main(String[] args) {
-        new App();
-    }
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					App window = new App();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
-    // private static void createAndShowGUI() {
-    //     //Create and set up the window.
-    //     JFrame frame = new JFrame("HelloWorldSwing");
-    //     // frame.setSize(500, 500); // TODO why doesn't this work??
-    //     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	/**
+	 * Create the application.
+	 */
+	public App() {
+		initialize();
+	}
 
-    //     //Add the ubiquitous "Hello World" label.
-    //     JLabel label = new JLabel("Hello World");
-    //     frame.getContentPane().add(label);
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setTitle("Desktop Dictionary");
+		frame.setBounds(100, 100, 1000, 500);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 
-    //     //Display the window.
-    //     frame.pack();
-    //     frame.setVisible(true);
-    // }
+		JPanel sideBar = new JPanel();
+		sideBar.setBounds(10, 11, 250, 444);
+		frame.getContentPane().add(sideBar);
+		sideBar.setLayout(null);
 
-    // public static void main(String[] args) {
-    //     //Schedule a job for the event-dispatching thread:
-    //     //creating and showing this application's GUI.
-    //     SwingUtilities.invokeLater(new Runnable() {
-    //         public void run() {
-    //             createAndShowGUI();
-    //         }
-    //     });
-    // }
+		JButton add = new JButton("Add");
+		add.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Add a word!");
+				// TODO add button action here
+			}
+		});
+		add.setBounds(10, 11, 110, 45);
+		sideBar.add(add);
+
+		JButton remove = new JButton("Remove");
+		remove.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Remove a word!!");
+				// TODO remove button action here
+			}
+		});
+		remove.setBounds(130, 11, 110, 45);
+		sideBar.add(remove);
+
+		search = new JTextField();
+		// PromptSupport.setPrompt("Search", txtSearch);
+		search.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Doing stuff here...");
+				// TODO remove button action here
+			}
+		});
+		search.setBounds(10, 67, 230, 31);
+		sideBar.add(search);
+		search.setColumns(10);
+
+		JCheckBox asc = new JCheckBox("Ascending");
+		asc.setBounds(10, 105, 110, 39);
+		sideBar.add(asc);
+
+		JCheckBox dec = new JCheckBox("Decending");
+		dec.setBounds(130, 105, 110, 39);
+		sideBar.add(dec);
+
+		JList<String> list = new JList<>(Word.getAllWords());
+		JScrollPane scrollPane = new JScrollPane(list);
+		scrollPane.setBounds(10, 143, 230, 301);
+		sideBar.add(scrollPane);
+		
+		JPanel main = new JPanel();
+		main.setBounds(270, 11, 708, 444);
+		frame.getContentPane().add(main);
+	}
 }
