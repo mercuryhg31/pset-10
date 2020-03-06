@@ -102,6 +102,82 @@ public class Word {
         } return output;
     }
 
+    /**
+     * Returns words as strings as a default list to become a JList
+     * 
+     * @return DefaultListModel of Strings of all words
+     */
+    public static DefaultListModel<String> getWordMenu() {
+    	DefaultListModel<String> output = new DefaultListModel<>();
+    	for (int i = 0; i < words.size(); i++) {
+    		output.add(i, words.get(i).getWord());
+    	}
+    	return output;
+    }
+
+    /**
+     * Returns, in print form, all defintions of queried word
+     * 
+     * @param query
+     * @return formatted string of all definitions
+     */
+    public static String outputDefinitions(String query) {
+        Word word = findWord(query);
+        if (word == null) {
+            return "No definitions";
+        }
+        ArrayList<Definition> defs = word.getDefinitions();
+        String output = "<html>";
+        for (int i = 0; i < defs.size(); i++) {
+            output += (defs.size() > 9 && i < 9 ? "&nbsp;" : "") + Integer.toString(i+1) + ". (" + defs.get(i).getPOS() + ") " + defs.get(i).getDefinition() + "<br/>";
+        }
+        return output.substring(0, output.length() - 5) + "</html>";
+    }
+
+    /**
+     * Returns, in print form, all synonyms of queried word
+     * 
+     * @param query
+     * @return formatted string of all definitions
+     */
+    public static String outputSynonyms(String query) {
+        Word word = findWord(query);
+        if (word == null) {
+            return "No synonyms";
+        }
+        ArrayList<String> syns = word.getSynonyms();
+        if (syns.isEmpty()) {
+            return "No synonyms";
+        }
+        String output = "<html>";
+        for (int i = 0; i < syns.size(); i++) {
+            output += (syns.size() > 9 && i < 9 ? "&nbsp;" : "") + Integer.toString(i+1) + ". " + syns.get(i) + "<br/>";
+        }
+        return output.substring(0, output.length() - 5) + "</html>";
+    }
+
+    /**
+     * Returns, in print form, all antonyms of queried word
+     * 
+     * @param query
+     * @return formatted string of all definitions
+     */
+    public static String outputAntonyms(String query) {
+        Word word = findWord(query);
+        if (word == null) {
+            return "No antonyms";
+        }
+        ArrayList<String> ants = word.getAntonyms();
+        if (ants.isEmpty()) {
+            return "No antonyms";
+        }
+        String output = "<html>";
+        for (int i = 0; i < ants.size(); i++) {
+            output += (ants.size() > 9 && i < 9 ? "&nbsp;" : "") + Integer.toString(i+1) + ". " + ants.get(i) + "<br/>";
+        }
+        return output.substring(0, output.length() - 5) + "</html>";
+    }
+
     public String getWord() {
         return word;
     }
@@ -118,14 +194,6 @@ public class Word {
         return antonyms;
     }
     
-    public static DefaultListModel<String> getAllWords() {
-    	DefaultListModel<String> output = new DefaultListModel<>();
-    	for (int i = 0; i < words.size(); i++) {
-    		output.add(i, words.get(i).getWord());
-    	}
-    	return output;
-    }
-
     /**
      * Returns all words from words.json as ArrayList of Word objects
      * Now sorted alphabetically because it means other stuff gets automatically alphabetically sorted, yipee

@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import dict.Word;
+import dict.*;
 
 import javax.swing.JCheckBox;
 import javax.swing.JScrollBar;
@@ -21,6 +21,11 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JTree;
 import javax.swing.JTextArea;
+import java.awt.SystemColor;
+import javax.swing.UIManager;
+import java.awt.Component;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 
 public class App {
 
@@ -105,7 +110,7 @@ public class App {
 		dec.setBounds(130, 105, 110, 39);
 		sideBar.add(dec);
 
-		JList<String> list = new JList<>(Word.getAllWords());
+		JList<String> list = new JList<>(Word.getWordMenu());
 		JScrollPane sideBarScroll = new JScrollPane(list);
 		sideBarScroll.setBounds(10, 143, 230, 301);
 		list.setSelectedIndex(0);
@@ -119,6 +124,7 @@ public class App {
 		JPanel wordPanel = new JPanel();
 
 		JScrollPane wordScroll = new JScrollPane(wordPanel);
+		wordScroll.setEnabled(false);
 		wordScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		wordScroll.setBounds(0, 0, 708, 444);
 
@@ -129,27 +135,78 @@ public class App {
 
 		wordPanel.setLayout(null);
 
-		JLabel wordL = new JLabel("Word");
+		JLabel wordL = new JLabel("Welcome to the Desktop Dictionary");
 		wordL.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		// wordL.setText(list.getSelectedValue()); // TODO uncomment for actual apps
-		list.addListSelectionListener(new ListSelectionListener(){
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				System.out.println("Oooooo, selectionss..");
-				wordL.setText(list.getSelectedValue());
-			}
-		});
-		wordL.setBounds(10, 11, 500, 42);
+		wordL.setBounds(10, 11, 686, 42);
 		wordPanel.add(wordL);
 
 		JLabel defHeader = new JLabel("Definitions");
 		defHeader.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		defHeader.setBounds(10, 59, 100, 21);
 		wordPanel.add(defHeader);
+		
+		JLabel defText = new JLabel();
+		defText.setVerticalAlignment(SwingConstants.TOP);
+		defText.setHorizontalAlignment(SwingConstants.LEFT);
+		defText.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		defText.setBackground(UIManager.getColor("Panel.background"));
+		// defText.setEditable(false);
+		defText.setText("No definitions");
+		// defText.setBounds(10, 91, 686, 122);
+		// wordPanel.add(defText);
 
-		JTextArea txtrHi = new JTextArea();
-		txtrHi.setText("hi");
-		txtrHi.setBounds(10, 91, 686, 101);
-		wordPanel.add(txtrHi);
+		JScrollPane defScroll = new JScrollPane(defText);
+		defScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		defScroll.setBounds(10, 91, 686, 75);
+		wordPanel.add(defScroll);
+
+		JLabel synHeader = new JLabel("Synonyms");
+		synHeader.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		synHeader.setBounds(10, 177, 100, 21);
+		wordPanel.add(synHeader);
+
+		JLabel synText = new JLabel();
+		synText.setVerticalAlignment(SwingConstants.TOP);
+		synText.setHorizontalAlignment(SwingConstants.LEFT);
+		synText.setBackground(UIManager.getColor("Panel.background"));
+		synText.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		synText.setBackground(UIManager.getColor("Panel.background"));
+		// synText.setEditable(false);
+		synText.setText("No synonyms");
+		
+		JScrollPane synScroll = new JScrollPane(synText);
+		synScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		synScroll.setBounds(10, 209, 686, 75);
+		wordPanel.add(synScroll);
+		
+		JLabel antHeader = new JLabel("Antonyms");
+		antHeader.setBounds(10, 295, 100, 21);
+		wordPanel.add(antHeader);
+		antHeader.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		JLabel antText = new JLabel();
+		antText.setVerticalAlignment(SwingConstants.TOP);
+		antText.setText("No antonyms");
+		antText.setHorizontalAlignment(SwingConstants.LEFT);
+		antText.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		antText.setBackground(SystemColor.menu);
+
+		JScrollPane antScroll = new JScrollPane(antText);
+		antScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		antScroll.setBounds(10, 327, 686, 75);
+		wordPanel.add(antScroll);
+
+
+		list.addListSelectionListener(new ListSelectionListener(){
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				System.out.println("Oooooo, selectionss..");
+				wordL.setText(list.getSelectedValue());
+				defText.setText(Word.outputDefinitions(list.getSelectedValue()));
+				synText.setText(Word.outputSynonyms(list.getSelectedValue()));
+				antText.setText(Word.outputAntonyms(list.getSelectedValue()));
+			}
+		});
 	}
 }
