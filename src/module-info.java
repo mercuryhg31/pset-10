@@ -10,6 +10,7 @@ module dictionary {
 
 	requires com.google.gson;
 	requires json.simple;
+	requires java.desktop;
 	
 	exports app;
 	opens dict;

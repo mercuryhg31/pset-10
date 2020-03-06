@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+import javax.swing.DefaultListModel;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -114,6 +116,14 @@ public class Word {
 
     public ArrayList<String> getAntonyms() {
         return antonyms;
+    }
+    
+    public static DefaultListModel<String> getAllWords() {
+    	DefaultListModel<String> output = new DefaultListModel<>();
+    	for (int i = 0; i < words.size(); i++) {
+    		output.add(i, words.get(i).getWord());
+    	}
+    	return output;
     }
 
     /**
