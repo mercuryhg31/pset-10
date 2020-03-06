@@ -7,6 +7,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import dict.Word;
 
@@ -16,6 +18,9 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
+import javax.swing.JTree;
+import javax.swing.JTextArea;
 
 public class App {
 
@@ -101,12 +106,50 @@ public class App {
 		sideBar.add(dec);
 
 		JList<String> list = new JList<>(Word.getAllWords());
-		JScrollPane scrollPane = new JScrollPane(list);
-		scrollPane.setBounds(10, 143, 230, 301);
-		sideBar.add(scrollPane);
-		
+		JScrollPane sideBarScroll = new JScrollPane(list);
+		sideBarScroll.setBounds(10, 143, 230, 301);
+		list.setSelectedIndex(0);
+		sideBar.add(sideBarScroll);
+
 		JPanel main = new JPanel();
 		main.setBounds(270, 11, 708, 444);
 		frame.getContentPane().add(main);
+		main.setLayout(null);
+
+		JPanel wordPanel = new JPanel();
+
+		JScrollPane wordScroll = new JScrollPane(wordPanel);
+		wordScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		wordScroll.setBounds(0, 0, 708, 444);
+
+		// wordPanel.setBounds(0, 0, 708, 444);
+		// main.add(wordPanel);
+
+		main.add(wordScroll);
+
+		wordPanel.setLayout(null);
+
+		JLabel wordL = new JLabel("Word");
+		wordL.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		// wordL.setText(list.getSelectedValue()); // TODO uncomment for actual apps
+		list.addListSelectionListener(new ListSelectionListener(){
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				System.out.println("Oooooo, selectionss..");
+				wordL.setText(list.getSelectedValue());
+			}
+		});
+		wordL.setBounds(10, 11, 500, 42);
+		wordPanel.add(wordL);
+
+		JLabel defHeader = new JLabel("Definitions");
+		defHeader.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		defHeader.setBounds(10, 59, 100, 21);
+		wordPanel.add(defHeader);
+
+		JTextArea txtrHi = new JTextArea();
+		txtrHi.setText("hi");
+		txtrHi.setBounds(10, 91, 686, 101);
+		wordPanel.add(txtrHi);
 	}
 }
