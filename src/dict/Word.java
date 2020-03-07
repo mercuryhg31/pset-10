@@ -32,11 +32,12 @@ public class Word {
     public static void addWord(Word word) {
         if (findWord(word.getWord()) != null) {
             System.out.println("\nCannot create duplicate word.\n");
-            return;
+            return; // TODO show error in application
         }
         words.add(word);
         words = sortWords(words);
         System.out.println("\nWord added successfully.\n");
+        writeJSON();
     }
 
     /**
@@ -243,7 +244,7 @@ public class Word {
             write.close();
             System.out.println("\nSaving data successful.\n");
         } catch (IOException e) {
-            System.out.println("\nSaving data unsuccessful.\n");
+            System.out.println("\nSaving data unsuccessful.\n"); // TODO show error in applications
             e.printStackTrace();
         }
     }
