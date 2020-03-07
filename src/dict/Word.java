@@ -129,7 +129,7 @@ public class Word {
         ArrayList<Definition> defs = word.getDefinitions();
         String output = "<html>";
         for (int i = 0; i < defs.size(); i++) {
-            output += (defs.size() > 9 && i < 9 ? "&nbsp;" : "") + Integer.toString(i+1) + ". (" + defs.get(i).getPOS() + ") " + defs.get(i).getDefinition() + "<br/>";
+            output += (defs.size() > 9 && i < 9 ? "&nbsp;" : "") + Integer.toString(i+1) + ". (" + (defs.get(i).getPOS().equals("adjective") ? "adj." : defs.get(i).getPOS()) + ") " + defs.get(i).getDefinition() + "<br/>";
         }
         return output.substring(0, output.length() - 5) + "</html>";
     }

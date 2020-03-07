@@ -26,6 +26,7 @@ import javax.swing.UIManager;
 import java.awt.Component;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.ListSelectionModel;
 
 public class App {
 
@@ -111,9 +112,9 @@ public class App {
 		sideBar.add(dec);
 
 		JList<String> list = new JList<>(Word.getWordMenu());
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane sideBarScroll = new JScrollPane(list);
 		sideBarScroll.setBounds(10, 143, 230, 301);
-		list.setSelectedIndex(0);
 		sideBar.add(sideBarScroll);
 
 		JPanel main = new JPanel();
@@ -123,15 +124,15 @@ public class App {
 
 		JPanel wordPanel = new JPanel();
 
-		JScrollPane wordScroll = new JScrollPane(wordPanel);
-		wordScroll.setEnabled(false);
-		wordScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		wordScroll.setBounds(0, 0, 708, 444);
+		// JScrollPane wordScroll = new JScrollPane(wordPanel);
+		// wordScroll.setEnabled(false);
+		// wordScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		// wordScroll.setBounds(0, 0, 708, 444);
 
-		// wordPanel.setBounds(0, 0, 708, 444);
-		// main.add(wordPanel);
+		wordPanel.setBounds(0, 0, 708, 444);
+		main.add(wordPanel);
 
-		main.add(wordScroll);
+		// main.add(wordScroll);
 
 		wordPanel.setLayout(null);
 
