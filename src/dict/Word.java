@@ -51,6 +51,7 @@ public class Word {
             if (words.get(i).getWord().equals(query)) {
                 words.remove(i);
                 System.out.println("\nWord deleted successfully.\n");
+                writeJSON();
                 return false;
             }
         }

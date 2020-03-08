@@ -1,5 +1,64 @@
 [
   {
+    "word": "a",
+    "definitions": [
+      {
+        "definition": "a",
+        "partOfSpeech": "noun"
+      }
+    ],
+    "synonyms": [],
+    "antonyms": []
+  },
+  {
+    "word": "aa",
+    "definitions": [
+      {
+        "definition": "a",
+        "partOfSpeech": "noun"
+      }
+    ],
+    "synonyms": [],
+    "antonyms": []
+  },
+  {
+    "word": "aaa",
+    "definitions": [
+      {
+        "definition": "aflsjdf",
+        "partOfSpeech": "noun"
+      }
+    ],
+    "synonyms": [],
+    "antonyms": []
+  },
+  {
+    "word": "aaaa",
+    "definitions": [
+      {
+        "definition": "aaa",
+        "partOfSpeech": "noun"
+      }
+    ],
+    "synonyms": [],
+    "antonyms": []
+  },
+  {
+    "word": "aaaaa",
+    "definitions": [
+      {
+        "definition": "sdf",
+        "partOfSpeech": "noun"
+      },
+      {
+        "definition": "aaaaaa",
+        "partOfSpeech": "noun"
+      }
+    ],
+    "synonyms": [],
+    "antonyms": []
+  },
+  {
     "word": "acquisition",
     "definitions": [
       {
@@ -26,6 +85,32 @@
       "skill",
       "learning"
     ],
+    "antonyms": []
+  },
+  {
+    "word": "adsf",
+    "definitions": [
+      {
+        "definition": "sdf",
+        "partOfSpeech": "noun"
+      },
+      {
+        "definition": "aaaaaa",
+        "partOfSpeech": "noun"
+      }
+    ],
+    "synonyms": [],
+    "antonyms": []
+  },
+  {
+    "word": "adsljdf",
+    "definitions": [
+      {
+        "definition": "adf",
+        "partOfSpeech": "noun"
+      }
+    ],
+    "synonyms": [],
     "antonyms": []
   },
   {
@@ -160,6 +245,21 @@
       "file away"
     ],
     "antonyms": []
+  },
+  {
+    "word": "ardvark",
+    "definitions": [
+      {
+        "definition": "a cutie pie",
+        "partOfSpeech": "noun"
+      }
+    ],
+    "synonyms": [
+      "asdf"
+    ],
+    "antonyms": [
+      "adf"
+    ]
   },
   {
     "word": "arrangement",
@@ -1233,6 +1333,36 @@
       "binding"
     ],
     "antonyms": []
+  },
+  {
+    "word": "dsfljasd",
+    "definitions": [
+      {
+        "definition": "asf",
+        "partOfSpeech": "adjective"
+      },
+      {
+        "definition": "ljafsd",
+        "partOfSpeech": "adjective"
+      },
+      {
+        "definition": "ljadf",
+        "partOfSpeech": "adjective"
+      }
+    ],
+    "synonyms": [
+      "sdf",
+      "sdfalfj",
+      "sdfalfjslfj"
+    ],
+    "antonyms": [
+      "asdfksdak",
+      "asdfksdaksdflkj",
+      "asdfksdaksdflkjasdflkj",
+      "asdfksdaksdflkjasdflkjsadflkjasdf",
+      "asdfksdaksdflkjasdflkjsadflkjasdfasdlsdfjadsf",
+      "asdfksdaksdflkjasdflkjsadflkjasdfasdlsdfjadsflasjflsdfdsakjfkaslfasdf"
+    ]
   },
   {
     "word": "eavesdrop",
@@ -2988,6 +3118,28 @@
     "antonyms": []
   },
   {
+    "word": "sdf",
+    "definitions": [
+      {
+        "definition": "adf",
+        "partOfSpeech": "noun"
+      }
+    ],
+    "synonyms": [],
+    "antonyms": []
+  },
+  {
+    "word": "sdff",
+    "definitions": [
+      {
+        "definition": "adf",
+        "partOfSpeech": "noun"
+      }
+    ],
+    "synonyms": [],
+    "antonyms": []
+  },
+  {
     "word": "secure",
     "definitions": [
       {
@@ -3557,6 +3709,17 @@
     "synonyms": [
       "finding of fact"
     ],
+    "antonyms": []
+  },
+  {
+    "word": "zoha",
+    "definitions": [
+      {
+        "definition": "a cutie pie",
+        "partOfSpeech": "noun"
+      }
+    ],
+    "synonyms": [],
     "antonyms": []
   }
 ]

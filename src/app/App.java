@@ -1,5 +1,6 @@
 package app;
 
+import java.awt.Choice;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -16,6 +17,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
+import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
@@ -24,8 +26,6 @@ import javax.swing.UIManager;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.ListSelectionModel;
-import java.awt.Choice;
-import java.awt.Component;
 
 public class App {
 
@@ -33,14 +33,19 @@ public class App {
 	private JTextField search;
 
 	private JPanel main;
+	private JPanel overlay;
+	private JPanel sideBar;
 	private JList<String> list;
+	private JScrollPane sideBarScroll;
 
+	private JPanel wordPanel;
 	private JPanel addPanel;
-
+	private JPanel removePanel;
+	
 	public enum Status { // public in case i go to other files?
 		WORD, ADD, REMOVE
 	}
-	public Status status;
+	public Status status = Status.WORD;
 
 	String defDisplay = "<html>"; int defNum = 0;
 	String synDisplay = "<html>"; int synNum = 0;
@@ -79,28 +84,29 @@ public class App {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		JPanel sideBar = new JPanel();
+		sideBar = new JPanel();
 		sideBar.setBounds(10, 11, 250, 444);
 		frame.getContentPane().add(sideBar);
 		sideBar.setLayout(null);
 
 		JButton add = new JButton("Add");
-		add.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Add a word!");
 				// TODO add button action here
+				if (status == Status.ADD) setMain(Status.WORD);
+				else setMain(Status.ADD);
 			}
 		});
 		add.setBounds(10, 11, 110, 45);
 		sideBar.add(add);
 
 		JButton remove = new JButton("Remove");
-		remove.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		remove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Remove a word!!");
 				// TODO remove button action here
+				setMain(Status.REMOVE);
 			}
 		});
 		remove.setBounds(130, 11, 110, 45);
@@ -119,18 +125,16 @@ public class App {
 		search.setColumns(10);
 
 		JCheckBox asc = new JCheckBox("Ascending");
-		asc.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		asc.setBounds(10, 105, 110, 39);
 		sideBar.add(asc);
 
 		JCheckBox dec = new JCheckBox("Decending");
-		dec.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		dec.setBounds(130, 105, 110, 39);
 		sideBar.add(dec);
 
 		list = new JList<>(Word.getWordMenu());
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		JScrollPane sideBarScroll = new JScrollPane(list);
+		sideBarScroll = new JScrollPane(list);
 		sideBarScroll.setBounds(10, 143, 230, 301);
 		sideBar.add(sideBarScroll);
 
@@ -139,6 +143,136 @@ public class App {
 		frame.getContentPane().add(main);
 		main.setLayout(null);
 
+		// overlay = new JPanel();
+		// overlay.setBounds(270, 11, 708, 444);
+		// frame.getContentPane().add(overlay);
+		// overlay.setLayout(null);
+
+		setWordPanel();
+		setAddPanel();
+		setRemovePanel();
+
+		setMain(Status.WORD);
+	}
+	
+	public void setMain(Status what) {
+		main.removeAll();
+		main.updateUI();
+		frame.remove(main);
+		if (status == Status.WORD) {
+			main.remove(wordPanel);
+		} else if (status == Status.ADD) {
+			main.remove(addPanel);
+		} else if (status == Status.REMOVE) {
+			main.remove(removePanel);
+		}
+		if (what == Status.WORD) {
+			status = Status.WORD;
+			main.add(wordPanel);
+			wordPanel.updateUI();
+		} else if (what == Status.ADD) {
+			status = Status.ADD;
+			main.add(addPanel);
+			addPanel.updateUI();
+		} else if (what == Status.REMOVE) {
+			status = Status.REMOVE;
+			main.add(removePanel);
+			removePanel.updateUI();
+		}
+		frame.add(main);
+		frame.revalidate();
+	}
+
+	public void setWordPanel() {
+		wordPanel = new JPanel();
+
+		// JScrollPane wordScroll = new JScrollPane(wordPanel);
+		// wordScroll.setEnabled(false);
+		// wordScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		// wordScroll.setBounds(0, 0, 708, 444);
+
+		wordPanel.setBounds(0, 0, 708, 444);
+
+		// main.add(wordScroll);
+
+		wordPanel.setLayout(null);
+
+		JLabel wordL = new JLabel("Welcome to the Desktop Dictionary");
+		wordL.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		// wordL.setText(list.getSelectedValue()); // TODO uncomment for actual apps
+		wordL.setBounds(10, 11, 686, 42);
+		wordPanel.add(wordL);
+
+		JLabel defHeader = new JLabel("Definitions");
+		defHeader.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		defHeader.setBounds(10, 59, 100, 21);
+		wordPanel.add(defHeader);
+
+		JLabel defText = new JLabel();
+		defText.setVerticalAlignment(SwingConstants.TOP);
+		defText.setHorizontalAlignment(SwingConstants.LEFT);
+		defText.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		defText.setBackground(UIManager.getColor("Panel.background"));
+		// defText.setEditable(false);
+		defText.setText("No definitions");
+		// defText.setBounds(10, 91, 686, 122);
+		// wordPanel.add(defText);
+
+		JScrollPane defScroll = new JScrollPane(defText);
+		defScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		defScroll.setBounds(10, 91, 686, 75);
+		wordPanel.add(defScroll);
+
+		JLabel synHeader = new JLabel("Synonyms");
+		synHeader.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		synHeader.setBounds(10, 177, 100, 21);
+		wordPanel.add(synHeader);
+
+		JLabel synText = new JLabel();
+		synText.setVerticalAlignment(SwingConstants.TOP);
+		synText.setHorizontalAlignment(SwingConstants.LEFT);
+		synText.setBackground(UIManager.getColor("Panel.background"));
+		synText.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		synText.setBackground(UIManager.getColor("Panel.background"));
+		// synText.setEditable(false);
+		synText.setText("No synonyms");
+
+		JScrollPane synScroll = new JScrollPane(synText);
+		synScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		synScroll.setBounds(10, 209, 686, 75);
+		wordPanel.add(synScroll);
+
+		JLabel antHeader = new JLabel("Antonyms");
+		antHeader.setBounds(10, 295, 100, 21);
+		wordPanel.add(antHeader);
+		antHeader.setFont(new Font("Tahoma", Font.PLAIN, 20));
+
+		JLabel antText = new JLabel();
+		antText.setVerticalAlignment(SwingConstants.TOP);
+		antText.setText("No antonyms");
+		antText.setHorizontalAlignment(SwingConstants.LEFT);
+		antText.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		antText.setBackground(SystemColor.menu);
+
+		JScrollPane antScroll = new JScrollPane(antText);
+		antScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		antScroll.setBounds(10, 327, 686, 75);
+		wordPanel.add(antScroll);
+
+
+		list.addListSelectionListener(new ListSelectionListener(){
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				System.out.println("Oooooo, selectionss..");
+				wordL.setText(list.getSelectedValue());
+				defText.setText(Word.outputDefinitions(list.getSelectedValue()));
+				synText.setText(Word.outputSynonyms(list.getSelectedValue()));
+				antText.setText(Word.outputAntonyms(list.getSelectedValue()));
+			}
+		});
+	}
+
+	public void setAddPanel() {
 		addPanel = new JPanel();
 
 		// JScrollPane wordScroll = new JScrollPane(wordPanel);
@@ -147,7 +281,7 @@ public class App {
 		// wordScroll.setBounds(0, 0, 708, 444);
 
 		addPanel.setBounds(0, 0, 708, 444);
-		main.add(addPanel); // TODO take this out in function
+		// main.add(addPanel); // TODO take this out in function
 
 		// main.add(wordScroll);
 
@@ -163,7 +297,7 @@ public class App {
 		newWordHeader.setBounds(10, 59, 100, 21);
 		addPanel.add(newWordHeader);
 
-		JLabel defHeader = new JLabel("Definitions (0)");
+		JLabel defHeader = new JLabel("Definitions");
 		defHeader.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		defHeader.setBounds(10, 91, 131, 21);
 		addPanel.add(defHeader);
@@ -274,10 +408,8 @@ public class App {
 		ArrayList<String> synonyms = new ArrayList<String>();
 		ArrayList<String> antonyms = new ArrayList<String>();
 
-		// TODO display actions
 		definition.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO definition display
 				definitions.add(new Definition(definition.getText(), pos.getSelectedItem()));
 				update();
 				definition.setText("");
@@ -285,41 +417,65 @@ public class App {
 			}
 			private void update() {
 				defNum++;
-				defDisplay += Integer.toString(defNum) + ". " + definition.getText() + "</br>";
+				defDisplay += Integer.toString(defNum) + ". (" + (pos.getSelectedItem().equals("adjective") ? "adj." : pos.getSelectedItem()) + ") " + definition.getText() + "<br/>";
 				defList.setText(defDisplay.substring(0, defDisplay.length() - 5) + "</html>");
 			}
 		});
 
 		synonym.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO synonym display
 				synonyms.add(synonym.getText());
+				update();
 				System.out.println("new synonym");
+			}
+			private void update() {
+				synNum++;
+				synDisplay += Integer.toString(synNum) + ". " + synonym.getText() + "<br/>";
+				synList.setText(synDisplay.substring(0, synDisplay.length() - 5) + "</html>");
 			}
 		});
 
 		antonym.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO antonym display
 				antonyms.add(antonym.getText());
+				update();
 				System.out.println("new antonym");
+			}
+			private void update() {
+				antNum++;
+				antDisplay += Integer.toString(antNum) + ". " + antonym.getText() + "<br/>";
+				antList.setText(antDisplay.substring(0, antDisplay.length() - 5) + "</html>");
 			}
 		});
 
 		addWord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO add new word
+				if (newWord.getText().isEmpty() || definitions.isEmpty()) return;
 				Word word = new Word(newWord.getText(), definitions, synonyms, antonyms);
 				defDisplay = "<html>"; defNum = 0;
 				synDisplay = "<html>"; synNum = 0;
 				antDisplay = "<html>"; antNum = 0;
 				Word.addWord(word);
+				newWord.setText("");
+				defList.setText("");
+				synList.setText("");
+				antList.setText("");
+				// TODO change add view to word view
+				setMain(Status.WORD);
 				System.out.println("Added a new word!");
+				// TODO UPDATE THE FREAKING SIDEBAR, GODDAMNIT
+				list = new JList<>(Word.getWordMenu());
+				list.updateUI();
+				sideBarScroll = new JScrollPane(list);
+				sideBarScroll.updateUI();
+				sideBar.remove(sideBarScroll);
+				sideBar.add(sideBarScroll);
+				sideBar.updateUI();
 			}
 		});
 	}
 
-	private void updateDisplay() {
-
+	public void setRemovePanel() {
+		removePanel = new JPanel();
 	}
 }
