@@ -17,7 +17,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
-import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
@@ -117,7 +116,7 @@ public class App {
 		search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Doing stuff here...");
-				// TODO remove button action here
+				// TODO search bar action here
 			}
 		});
 		search.setBounds(10, 67, 230, 31);
@@ -199,7 +198,6 @@ public class App {
 
 		JLabel wordL = new JLabel("Welcome to the Desktop Dictionary");
 		wordL.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		// wordL.setText(list.getSelectedValue()); // TODO uncomment for actual apps
 		wordL.setBounds(10, 11, 686, 42);
 		wordPanel.add(wordL);
 
@@ -274,17 +272,7 @@ public class App {
 
 	public void setAddPanel() {
 		addPanel = new JPanel();
-
-		// JScrollPane wordScroll = new JScrollPane(wordPanel);
-		// wordScroll.setEnabled(false);
-		// wordScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		// wordScroll.setBounds(0, 0, 708, 444);
-
 		addPanel.setBounds(0, 0, 708, 444);
-		// main.add(addPanel); // TODO take this out in function
-
-		// main.add(wordScroll);
-
 		addPanel.setLayout(null);
 
 		JLabel addL = new JLabel("Add Word");
@@ -460,7 +448,7 @@ public class App {
 				defList.setText("");
 				synList.setText("");
 				antList.setText("");
-				// TODO change add view to word view
+				// change add view to word view
 				setMain(Status.WORD);
 				System.out.println("Added a new word!");
 				// TODO UPDATE THE FREAKING SIDEBAR, GODDAMNIT

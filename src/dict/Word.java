@@ -32,7 +32,7 @@ public class Word {
     public static void addWord(Word word) {
         if (findWord(word.getWord()) != null) {
             System.out.println("\nCannot create duplicate word.\n");
-            return; // TODO show error in application
+            return; // TODO show error in application THIS ONE IMPORTANT not the other
         }
         words.add(word);
         words = sortWords(words);
