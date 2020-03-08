@@ -50,6 +50,8 @@ public class App {
 	private JCheckBox dec;
 
 	private ListSelectionListener listListener;
+	private ActionListener ascAction;
+	private ActionListener decAction;
 
 	public enum Status { // public in case i go to other files?
 		WORD, ADD, REMOVE
@@ -149,7 +151,7 @@ public class App {
 		frame.getContentPane().add(main);
 		main.setLayout(null);
 
-		asc.addActionListener(new ActionListener() {
+		ascAction = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dec.setSelected(false);
 				if (!asc.isSelected()) return;
@@ -166,8 +168,8 @@ public class App {
 				list = new JList<>(conv);
 				updateSideBar(list);
 			}
-		});
-		dec.addActionListener(new ActionListener() {
+		};
+		decAction = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				asc.setSelected(false);
 				if (!dec.isSelected()) return;
@@ -190,7 +192,10 @@ public class App {
 				list = new JList<>(conv);
 				updateSideBar(list);
 			}
-		});
+		};
+
+		asc.addActionListener(ascAction);
+		dec.addActionListener(decAction);
 
 		search.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
@@ -198,7 +203,7 @@ public class App {
 				search.setText("");
 			}
 			public void focusLost(FocusEvent e) {
-				
+
 			}
 		});
 		search.getDocument().addDocumentListener(new DocumentListener(){
@@ -540,10 +545,12 @@ public class App {
 	public void updateSideBar() {
 		list = new JList<>(Word.getWordMenu());
 		if (asc.isSelected()) {
+			System.out.println("Ascending selected");
 			asc.doClick();
 			asc.setSelected(true);
 		}
 		if (dec.isSelected()) {
+			System.out.println("Descending selected");
 			dec.doClick();
 			dec.setSelected(true);
 		}
@@ -559,10 +566,12 @@ public class App {
 	public void updateSideBar(JList<String> replaceList) {
 		list = replaceList;
 		if (asc.isSelected()) {
+			System.out.println("Ascending selected");
 			asc.doClick(); // TODO this doesn't workkkk
 			asc.setSelected(true);
 		}
 		if (dec.isSelected()) {
+			System.out.println("Descending selected");
 			dec.doClick();
 			dec.setSelected(true);
 		}
