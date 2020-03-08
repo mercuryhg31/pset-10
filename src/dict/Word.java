@@ -55,7 +55,7 @@ public class Word {
                 return false;
             }
         }
-        System.out.println("\nWord deletion unsuccessful.\n");
+        System.out.println("\nWord deletion unsuccessful.\n"); // TODO put error in display
         return true;
     }
 

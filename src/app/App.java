@@ -32,7 +32,6 @@ public class App {
 	private JTextField search;
 
 	private JPanel main;
-	private JPanel overlay;
 	private JPanel sideBar;
 	private JList<String> list;
 	private JScrollPane sideBarScroll;
@@ -141,11 +140,6 @@ public class App {
 		main.setBounds(270, 11, 708, 444);
 		frame.getContentPane().add(main);
 		main.setLayout(null);
-
-		// overlay = new JPanel();
-		// overlay.setBounds(270, 11, 708, 444);
-		// frame.getContentPane().add(overlay);
-		// overlay.setLayout(null);
 
 		setWordPanel();
 		setAddPanel();
@@ -448,22 +442,100 @@ public class App {
 				defList.setText("");
 				synList.setText("");
 				antList.setText("");
-				// change add view to word view
-				setMain(Status.WORD);
 				System.out.println("Added a new word!");
 				// TODO UPDATE THE FREAKING SIDEBAR, GODDAMNIT
-				list = new JList<>(Word.getWordMenu());
-				list.updateUI();
-				sideBarScroll = new JScrollPane(list);
-				sideBarScroll.updateUI();
-				sideBar.remove(sideBarScroll);
-				sideBar.add(sideBarScroll);
-				sideBar.updateUI();
+				updateSideBar();
+				// change add view to word view
+				setMain(Status.WORD);
 			}
 		});
 	}
 
+	public void updateSideBar() {
+		list = new JList<>(Word.getWordMenu());
+		sideBar.remove(sideBarScroll);
+		sideBar.updateUI();
+		sideBarScroll = new JScrollPane(list);
+		sideBarScroll.setBounds(10, 143, 230, 301);
+		sideBarScroll.updateUI();
+		sideBar.add(sideBarScroll);
+		sideBar.updateUI();
+	}
+
 	public void setRemovePanel() {
 		removePanel = new JPanel();
+		removePanel.setBounds(0, 0, 708, 444);
+		removePanel.setLayout(null);
+		// main.add(removePanel); // TODO take out
+
+		list.clearSelection();
+		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		list.updateUI();
+		updateSideBar(); // TODO insert or not??
+
+		JLabel removeL = new JLabel("Remove Words");
+		removeL.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		removeL.setBounds(10, 11, 686, 42);
+		removePanel.add(removeL);
+		
+		JLabel instructions = new JLabel("<html>Select all the words you would like to delete from the display towards the left and click the remove <br/> button below when you are ready.</html>");
+		instructions.setVerticalAlignment(SwingConstants.TOP);
+		instructions.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		instructions.setBounds(10, 64, 686, 42);
+		removePanel.add(instructions);
+		
+		JButton removeBtn = new JButton("Remove");
+		removeBtn.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		removeBtn.setBounds(10, 117, 110, 45);
+		removePanel.add(removeBtn);
+
+		JLabel confirmMssg = new JLabel("Are you sure you want to remove these words from the dictionary? Your actions cannot be undone.");
+		confirmMssg.setVerticalAlignment(SwingConstants.TOP);
+		confirmMssg.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		confirmMssg.setBounds(10, 173, 686, 19);	
+
+		JButton confirmYes = new JButton("Yes");
+		confirmYes.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		confirmYes.setBounds(10, 203, 110, 45);
+
+		JButton confirmNo = new JButton("No");
+		confirmNo.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		confirmNo.setBounds(130, 203, 110, 45);
+
+		removeBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<String> selections = (ArrayList<String>) list.getSelectedValuesList();
+				// if (selections.isEmpty()) return;
+				removePanel.add(confirmMssg);
+				removePanel.add(confirmYes);
+				removePanel.add(confirmNo);
+				removePanel.updateUI();
+				System.out.println("Removing word?");
+			}
+		});
+
+		confirmYes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<String> selections = (ArrayList<String>) list.getSelectedValuesList();
+				for (String selection: selections) {
+					Word.deleteWord(selection);
+				}
+				confirmNo.doClick();
+				System.out.println("Word(s) removed!");
+			}
+		});
+
+		confirmNo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO add cancellation action here
+				list.clearSelection();
+				list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				list.updateUI();
+				// TODO update side bar?? yes
+				updateSideBar();
+				setMain(Status.WORD); // TODO insert
+				System.out.println("Nope, we ain't removing no words");
+			}
+		});
 	}
 }

@@ -1,57 +1,9 @@
 [
   {
-    "word": "a",
+    "word": "abracadabra",
     "definitions": [
       {
-        "definition": "a",
-        "partOfSpeech": "noun"
-      }
-    ],
-    "synonyms": [],
-    "antonyms": []
-  },
-  {
-    "word": "aa",
-    "definitions": [
-      {
-        "definition": "a",
-        "partOfSpeech": "noun"
-      }
-    ],
-    "synonyms": [],
-    "antonyms": []
-  },
-  {
-    "word": "aaa",
-    "definitions": [
-      {
-        "definition": "aflsjdf",
-        "partOfSpeech": "noun"
-      }
-    ],
-    "synonyms": [],
-    "antonyms": []
-  },
-  {
-    "word": "aaaa",
-    "definitions": [
-      {
-        "definition": "aaa",
-        "partOfSpeech": "noun"
-      }
-    ],
-    "synonyms": [],
-    "antonyms": []
-  },
-  {
-    "word": "aaaaa",
-    "definitions": [
-      {
-        "definition": "sdf",
-        "partOfSpeech": "noun"
-      },
-      {
-        "definition": "aaaaaa",
+        "definition": "thaumaturgy",
         "partOfSpeech": "noun"
       }
     ],
@@ -85,32 +37,6 @@
       "skill",
       "learning"
     ],
-    "antonyms": []
-  },
-  {
-    "word": "adsf",
-    "definitions": [
-      {
-        "definition": "sdf",
-        "partOfSpeech": "noun"
-      },
-      {
-        "definition": "aaaaaa",
-        "partOfSpeech": "noun"
-      }
-    ],
-    "synonyms": [],
-    "antonyms": []
-  },
-  {
-    "word": "adsljdf",
-    "definitions": [
-      {
-        "definition": "adf",
-        "partOfSpeech": "noun"
-      }
-    ],
-    "synonyms": [],
     "antonyms": []
   },
   {
@@ -245,21 +171,6 @@
       "file away"
     ],
     "antonyms": []
-  },
-  {
-    "word": "ardvark",
-    "definitions": [
-      {
-        "definition": "a cutie pie",
-        "partOfSpeech": "noun"
-      }
-    ],
-    "synonyms": [
-      "asdf"
-    ],
-    "antonyms": [
-      "adf"
-    ]
   },
   {
     "word": "arrangement",

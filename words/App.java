@@ -1,5 +1,6 @@
 package app;
 
+import java.awt.Choice;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -16,6 +17,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.SystemColor;
@@ -30,7 +32,9 @@ public class App {
 	private JTextField search;
 
 	private JPanel main;
+	private JPanel sideBar;
 	private JList<String> list;
+	private JScrollPane sideBarScroll;
 
 	private JPanel wordPanel;
 	private JPanel addPanel;
@@ -39,7 +43,7 @@ public class App {
 	public enum Status { // public in case i go to other files?
 		WORD, ADD, REMOVE
 	}
-	public Status status;
+	public Status status = Status.WORD;
 
 	String defDisplay = "<html>"; int defNum = 0;
 	String synDisplay = "<html>"; int synNum = 0;
@@ -78,7 +82,7 @@ public class App {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		JPanel sideBar = new JPanel();
+		sideBar = new JPanel();
 		sideBar.setBounds(10, 11, 250, 444);
 		frame.getContentPane().add(sideBar);
 		sideBar.setLayout(null);
@@ -88,7 +92,8 @@ public class App {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Add a word!");
 				// TODO add button action here
-				setMain(Status.ADD);
+				if (status == Status.ADD) setMain(Status.WORD);
+				else setMain(Status.ADD);
 			}
 		});
 		add.setBounds(10, 11, 110, 45);
@@ -110,7 +115,7 @@ public class App {
 		search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Doing stuff here...");
-				// TODO remove button action here
+				// TODO search bar action here
 			}
 		});
 		search.setBounds(10, 67, 230, 31);
@@ -127,7 +132,7 @@ public class App {
 
 		list = new JList<>(Word.getWordMenu());
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		JScrollPane sideBarScroll = new JScrollPane(list);
+		sideBarScroll = new JScrollPane(list);
 		sideBarScroll.setBounds(10, 143, 230, 301);
 		sideBar.add(sideBarScroll);
 
@@ -140,10 +145,13 @@ public class App {
 		setAddPanel();
 		setRemovePanel();
 
-		setMain(Status.ADD);
+		setMain(Status.WORD);
 	}
 	
 	public void setMain(Status what) {
+		main.removeAll();
+		main.updateUI();
+		frame.remove(main);
 		if (status == Status.WORD) {
 			main.remove(wordPanel);
 		} else if (status == Status.ADD) {
@@ -152,12 +160,20 @@ public class App {
 			main.remove(removePanel);
 		}
 		if (what == Status.WORD) {
+			status = Status.WORD;
 			main.add(wordPanel);
+			wordPanel.updateUI();
 		} else if (what == Status.ADD) {
+			status = Status.ADD;
 			main.add(addPanel);
+			addPanel.updateUI();
 		} else if (what == Status.REMOVE) {
+			status = Status.REMOVE;
 			main.add(removePanel);
+			removePanel.updateUI();
 		}
+		frame.add(main);
+		frame.revalidate();
 	}
 
 	public void setWordPanel() {
@@ -176,7 +192,6 @@ public class App {
 
 		JLabel wordL = new JLabel("Welcome to the Desktop Dictionary");
 		wordL.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		// wordL.setText(list.getSelectedValue()); // TODO uncomment for actual apps
 		wordL.setBounds(10, 11, 686, 42);
 		wordPanel.add(wordL);
 
@@ -251,17 +266,7 @@ public class App {
 
 	public void setAddPanel() {
 		addPanel = new JPanel();
-
-		// JScrollPane wordScroll = new JScrollPane(wordPanel);
-		// wordScroll.setEnabled(false);
-		// wordScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		// wordScroll.setBounds(0, 0, 708, 444);
-
 		addPanel.setBounds(0, 0, 708, 444);
-		// main.add(addPanel); // TODO take this out in function
-
-		// main.add(wordScroll);
-
 		addPanel.setLayout(null);
 
 		JLabel addL = new JLabel("Add Word");
@@ -274,7 +279,7 @@ public class App {
 		newWordHeader.setBounds(10, 59, 100, 21);
 		addPanel.add(newWordHeader);
 
-		JLabel defHeader = new JLabel("Definitions (0)");
+		JLabel defHeader = new JLabel("Definitions");
 		defHeader.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		defHeader.setBounds(10, 91, 131, 21);
 		addPanel.add(defHeader);
@@ -427,19 +432,110 @@ public class App {
 
 		addWord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (newWord.getText().isEmpty() || definitions.isEmpty()) return;
 				Word word = new Word(newWord.getText(), definitions, synonyms, antonyms);
 				defDisplay = "<html>"; defNum = 0;
 				synDisplay = "<html>"; synNum = 0;
 				antDisplay = "<html>"; antNum = 0;
 				Word.addWord(word);
-				// TODO change add view to word view
-				setMain(Status.WORD);
+				newWord.setText("");
+				defList.setText("");
+				synList.setText("");
+				antList.setText("");
 				System.out.println("Added a new word!");
+				// TODO UPDATE THE FREAKING SIDEBAR, GODDAMNIT
+				updateSideBar();
+				// change add view to word view
+				setMain(Status.WORD);
 			}
 		});
 	}
 
+	public void updateSideBar() {
+		list = new JList<>(Word.getWordMenu());
+		sideBar.remove(sideBarScroll);
+		sideBar.updateUI();
+		sideBarScroll = new JScrollPane(list);
+		sideBarScroll.setBounds(10, 143, 230, 301);
+		sideBarScroll.updateUI();
+		sideBar.add(sideBarScroll);
+		sideBar.updateUI();
+	}
+
 	public void setRemovePanel() {
 		removePanel = new JPanel();
+		removePanel.setBounds(0, 0, 708, 444);
+		removePanel.setLayout(null);
+		// main.add(removePanel); // TODO take out
+
+		list.clearSelection();
+		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		list.updateUI();
+		updateSideBar(); // TODO insert or not??
+
+		JLabel removeL = new JLabel("Remove Words");
+		removeL.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		removeL.setBounds(10, 11, 686, 42);
+		removePanel.add(removeL);
+		
+		JLabel instructions = new JLabel("<html>Select all the words you would like to delete from the display towards the left and click the remove <br/> button below when you are ready.</html>");
+		instructions.setVerticalAlignment(SwingConstants.TOP);
+		instructions.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		instructions.setBounds(10, 64, 686, 42);
+		removePanel.add(instructions);
+		
+		JButton removeBtn = new JButton("Remove");
+		removeBtn.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		removeBtn.setBounds(10, 117, 110, 45);
+		removePanel.add(removeBtn);
+
+		JLabel confirmMssg = new JLabel("Are you sure you want to remove these words from the dictionary? Your actions cannot be undone.");
+		confirmMssg.setVerticalAlignment(SwingConstants.TOP);
+		confirmMssg.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		confirmMssg.setBounds(10, 173, 686, 19);	
+
+		JButton confirmYes = new JButton("Yes");
+		confirmYes.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		confirmYes.setBounds(10, 203, 110, 45);
+
+		JButton confirmNo = new JButton("No");
+		confirmNo.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		confirmNo.setBounds(130, 203, 110, 45);
+
+		removeBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<String> selections = (ArrayList<String>) list.getSelectedValuesList();
+				// if (selections.isEmpty()) return;
+				removePanel.add(confirmMssg);
+				removePanel.add(confirmYes);
+				removePanel.add(confirmNo);
+				removePanel.updateUI();
+				System.out.println("Removing word?");
+			}
+		});
+
+		confirmYes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<String> selections = (ArrayList<String>) list.getSelectedValuesList();
+				for (String selection: selections) {
+					Word.deleteWord(selection);
+				}
+				confirmNo.doClick();
+				System.out.println("Word(s) removed!");
+			}
+		});
+
+		confirmNo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO add cancellation action here
+				list.clearSelection();
+				list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				list.updateUI();
+				// TODO update side bar?? yes
+				updateSideBar();
+				setMain(Status.WORD); // TODO insert
+				System.out.println("Nope, we ain't removing no words");
+			}
+		});
 	}
 }
