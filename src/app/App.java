@@ -519,7 +519,7 @@ public class App {
 				synList.setText("");
 				antList.setText("");
 				System.out.println("Added a new word!");
-				// TODO UPDATE THE FREAKING SIDEBAR, GODDAMNIT
+				// UPDATE THE FREAKING SIDEBAR, GODDAMNIT
 				updateSideBar();
 				// change add view to word view
 				setWordPanel();
@@ -570,12 +570,11 @@ public class App {
 		removePanel = new JPanel();
 		removePanel.setBounds(0, 0, 708, 444);
 		removePanel.setLayout(null);
-		// main.add(removePanel); // TODO take out
 
 		list.clearSelection();
 		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		list.updateUI();
-		updateSideBar(); // TODO insert or not??
+		updateSideBar();
 
 		JLabel removeL = new JLabel("Remove Words");
 		removeL.setFont(new Font("Tahoma", Font.PLAIN, 30));
@@ -634,10 +633,10 @@ public class App {
 				list.clearSelection();
 				list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 				list.updateUI();
-				// TODO update side bar?? yes
+				// update side bar?? yes
 				updateSideBar();
 				setWordPanel();
-				setMain(Status.WORD); // TODO insert
+				setMain(Status.WORD);
 				System.out.println("Nope, we ain't removing no words");
 			}
 		});
