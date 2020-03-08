@@ -60,9 +60,6 @@ public class App {
 	String synDisplay = "<html>"; int synNum = 0;
 	String antDisplay = "<html>"; int antNum = 0;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -76,16 +73,10 @@ public class App {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public App() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.setTitle("Desktop Dictionary");
@@ -134,7 +125,6 @@ public class App {
 		sideBar.add(remove);
 
 		search = new JTextField("Search here");
-		// TODO impose search in the background of the search bar
 		search.setBounds(10, 67, 230, 31);
 		search.setToolTipText("Search");
 		sideBar.add(search);
