@@ -22,6 +22,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyListener;
@@ -45,7 +46,10 @@ public class App {
 	private JPanel wordPanel;
 	private JPanel addPanel;
 	private JPanel removePanel;
-	
+
+	private JCheckBox asc;
+	private JCheckBox dec;
+
 	public enum Status { // public in case i go to other files?
 		WORD, ADD, REMOVE
 	}
@@ -102,7 +106,10 @@ public class App {
 					setWordPanel();
 					setMain(Status.WORD);
 				}
-				else setMain(Status.ADD);
+				else {
+					setAddPanel();
+					setMain(Status.ADD);
+				}
 			}
 		});
 		add.setBounds(10, 11, 110, 45);
@@ -113,7 +120,15 @@ public class App {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Remove a word!!");
 				// TODO remove button action here
-				setMain(Status.REMOVE);
+				if (status == Status.REMOVE) {
+					setWordPanel();
+					list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+					setMain(Status.WORD);
+				}
+				else {
+					setRemovePanel();
+					setMain(Status.REMOVE);
+				}
 			}
 		});
 		remove.setBounds(130, 11, 110, 45);
@@ -131,11 +146,11 @@ public class App {
 		sideBar.add(search);
 		search.setColumns(10);
 
-		JCheckBox asc = new JCheckBox("Ascending");
+		asc = new JCheckBox("Ascending");
 		asc.setBounds(10, 105, 110, 39);
 		sideBar.add(asc);
 
-		JCheckBox dec = new JCheckBox("Decending");
+		dec = new JCheckBox("Decending");
 		dec.setBounds(130, 105, 110, 39);
 		sideBar.add(dec);
 
@@ -152,25 +167,59 @@ public class App {
 
 		asc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				dec.setSelected(false);
+				if (!asc.isSelected()) return;
+
+				ArrayList<String> temp = new ArrayList<String>();
+				for (int i = 0; i < list.getModel().getSize(); i++) {
+					temp.add(list.getModel().getElementAt(i));
+				}
+				Collections.sort(temp);
+				DefaultListModel<String> conv = new DefaultListModel<>();
+				for (int i = 0; i < temp.size(); i++) {
+					conv.add(i, temp.get(i));
+				}
+				list = new JList<>(conv);
+				updateSideBar(list);
 			}
 		});
 		dec.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				asc.setSelected(false);
+				if (!dec.isSelected()) return;
+
+				ArrayList<String> temp = new ArrayList<String>();
+				for (int i = 0; i < list.getModel().getSize(); i++) {
+					temp.add(list.getModel().getElementAt(i));
+				}
+				Collections.sort(temp);
+
+				ArrayList<String> temp2 = new ArrayList<String>();
+				for (int i = 0; i < temp.size(); i++) {
+					temp2.add(temp.get(temp.size()-i-1));
+				}
+
+				DefaultListModel<String> conv = new DefaultListModel<>();
+				for (int i = 0; i < temp2.size(); i++) {
+					conv.add(i, temp2.get(i));
+				}
+				list = new JList<>(conv);
+				updateSideBar(list);
 			}
 		});
 
 		search.getDocument().addDocumentListener(new DocumentListener(){
 			public void changedUpdate(DocumentEvent e) {
 				if (search.getText().isEmpty()) updateSideBar();
-                search();
-            }
-            public void removeUpdate(DocumentEvent e) {
+				search();
+			}
+			public void removeUpdate(DocumentEvent e) {
 				if (search.getText().isEmpty()) updateSideBar();
-                search();
-            }
-            public void insertUpdate(DocumentEvent e) {
+				search();
+			}
+			public void insertUpdate(DocumentEvent e) {
 				if (search.getText().isEmpty()) updateSideBar();
-                search();
+				search();
 			}
 			public void search() {
 				// TODO search bar display here
@@ -208,10 +257,11 @@ public class App {
 		setWordPanel();
 		setAddPanel();
 		setRemovePanel();
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		setMain(Status.WORD);
 	}
-	
+
 	public void setMain(Status what) {
 		main.removeAll();
 		main.updateUI();
@@ -241,17 +291,9 @@ public class App {
 	}
 
 	public void setWordPanel() {
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		wordPanel = new JPanel();
-
-		// JScrollPane wordScroll = new JScrollPane(wordPanel);
-		// wordScroll.setEnabled(false);
-		// wordScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		// wordScroll.setBounds(0, 0, 708, 444);
-
 		wordPanel.setBounds(0, 0, 708, 444);
-
-		// main.add(wordScroll);
-
 		wordPanel.setLayout(null);
 
 		JLabel wordL = new JLabel("Welcome to the Desktop Dictionary");
@@ -329,6 +371,7 @@ public class App {
 	}
 
 	public void setAddPanel() {
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		addPanel = new JPanel();
 		addPanel.setBounds(0, 0, 708, 444);
 		addPanel.setLayout(null);
@@ -518,6 +561,14 @@ public class App {
 
 	public void updateSideBar() {
 		list = new JList<>(Word.getWordMenu());
+		if (asc.isSelected()) {
+			asc.doClick();
+			asc.setSelected(true);
+		}
+		if (dec.isSelected()) {
+			dec.doClick();
+			dec.setSelected(true);
+		}
 		sideBar.remove(sideBarScroll);
 		sideBar.updateUI();
 		sideBarScroll = new JScrollPane(list);
@@ -529,6 +580,14 @@ public class App {
 
 	public void updateSideBar(JList<String> replaceList) {
 		list = replaceList;
+		if (asc.isSelected()) {
+			asc.doClick(); // TODO this doesn't workkkk
+			asc.setSelected(true);
+		}
+		if (dec.isSelected()) {
+			dec.doClick();
+			dec.setSelected(true);
+		}
 		sideBar.remove(sideBarScroll);
 		sideBar.updateUI();
 		sideBarScroll = new JScrollPane(list);
@@ -553,13 +612,13 @@ public class App {
 		removeL.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		removeL.setBounds(10, 11, 686, 42);
 		removePanel.add(removeL);
-		
+
 		JLabel instructions = new JLabel("<html>Select all the words you would like to delete from the display towards the left and click the remove <br/> button below when you are ready.</html>");
 		instructions.setVerticalAlignment(SwingConstants.TOP);
 		instructions.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		instructions.setBounds(10, 64, 686, 42);
 		removePanel.add(instructions);
-		
+
 		JButton removeBtn = new JButton("Remove");
 		removeBtn.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		removeBtn.setBounds(10, 117, 110, 45);
@@ -568,7 +627,7 @@ public class App {
 		JLabel confirmMssg = new JLabel("Are you sure you want to remove these words from the dictionary? Your actions cannot be undone.");
 		confirmMssg.setVerticalAlignment(SwingConstants.TOP);
 		confirmMssg.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		confirmMssg.setBounds(10, 173, 686, 19);	
+		confirmMssg.setBounds(10, 173, 686, 19);
 
 		JButton confirmYes = new JButton("Yes");
 		confirmYes.setFont(new Font("Tahoma", Font.PLAIN, 15));
