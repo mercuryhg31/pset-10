@@ -20,6 +20,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusListener;
+import java.awt.event.FocusEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.awt.event.ActionEvent;
@@ -46,6 +48,8 @@ public class App {
 
 	private JCheckBox asc;
 	private JCheckBox dec;
+
+	private ListSelectionListener listListener;
 
 	public enum Status { // public in case i go to other files?
 		WORD, ADD, REMOVE
@@ -129,9 +133,10 @@ public class App {
 		remove.setBounds(130, 11, 110, 45);
 		sideBar.add(remove);
 
-		search = new JTextField();
+		search = new JTextField("Search here");
 		// TODO impose search in the background of the search bar
 		search.setBounds(10, 67, 230, 31);
+		search.setToolTipText("Search");
 		sideBar.add(search);
 		search.setColumns(10);
 
@@ -197,6 +202,15 @@ public class App {
 			}
 		});
 
+		search.addFocusListener(new FocusListener() {
+			public void focusGained(FocusEvent e) {
+				if (!search.getText().equals("Search here")) return;
+				search.setText("");
+			}
+			public void focusLost(FocusEvent e) {
+				
+			}
+		});
 		search.getDocument().addDocumentListener(new DocumentListener(){
 			public void changedUpdate(DocumentEvent e) {
 				if (search.getText().isEmpty()) updateSideBar();
@@ -218,6 +232,10 @@ public class App {
 				}
 				JList<String> searchDisplay = new JList<>(display);
 				updateSideBar(searchDisplay);
+
+				if (status == Status.WORD) {
+					list.addListSelectionListener(listListener);
+				}
 
 				System.out.println("Searching!");
 			}
@@ -326,8 +344,7 @@ public class App {
 		antScroll.setBounds(10, 327, 686, 75);
 		wordPanel.add(antScroll);
 
-
-		list.addListSelectionListener(new ListSelectionListener(){
+		listListener = new ListSelectionListener(){
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				System.out.println("Oooooo, selectionss..");
@@ -336,7 +353,9 @@ public class App {
 				synText.setText(Word.outputSynonyms(list.getSelectedValue()));
 				antText.setText(Word.outputAntonyms(list.getSelectedValue()));
 			}
-		});
+		};
+
+		list.addListSelectionListener(listListener);
 	}
 
 	public void setAddPanel() {
