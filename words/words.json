@@ -1,16 +1,5 @@
 [
   {
-    "word": "abracadabra",
-    "definitions": [
-      {
-        "definition": "thaumaturgy",
-        "partOfSpeech": "noun"
-      }
-    ],
-    "synonyms": [],
-    "antonyms": []
-  },
-  {
     "word": "acquisition",
     "definitions": [
       {
@@ -1244,36 +1233,6 @@
       "binding"
     ],
     "antonyms": []
-  },
-  {
-    "word": "dsfljasd",
-    "definitions": [
-      {
-        "definition": "asf",
-        "partOfSpeech": "adjective"
-      },
-      {
-        "definition": "ljafsd",
-        "partOfSpeech": "adjective"
-      },
-      {
-        "definition": "ljadf",
-        "partOfSpeech": "adjective"
-      }
-    ],
-    "synonyms": [
-      "sdf",
-      "sdfalfj",
-      "sdfalfjslfj"
-    ],
-    "antonyms": [
-      "asdfksdak",
-      "asdfksdaksdflkj",
-      "asdfksdaksdflkjasdflkj",
-      "asdfksdaksdflkjasdflkjsadflkjasdf",
-      "asdfksdaksdflkjasdflkjsadflkjasdfasdlsdfjadsf",
-      "asdfksdaksdflkjasdflkjsadflkjasdfasdlsdfjadsflasjflsdfdsakjfkaslfasdf"
-    ]
   },
   {
     "word": "eavesdrop",
@@ -3026,28 +2985,6 @@
       "dust",
       "sprinkle"
     ],
-    "antonyms": []
-  },
-  {
-    "word": "sdf",
-    "definitions": [
-      {
-        "definition": "adf",
-        "partOfSpeech": "noun"
-      }
-    ],
-    "synonyms": [],
-    "antonyms": []
-  },
-  {
-    "word": "sdff",
-    "definitions": [
-      {
-        "definition": "adf",
-        "partOfSpeech": "noun"
-      }
-    ],
-    "synonyms": [],
     "antonyms": []
   },
   {

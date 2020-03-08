@@ -86,7 +86,7 @@ public class Word {
         ArrayList<Integer> sorted = new ArrayList<Integer>();
         ArrayList<Word> output = new ArrayList<Word>();
         for (int i = 0; i < words.size(); i++) {
-            if (words.get(i).getWord().contains(query)) {
+            if (words.get(i).getWord().toUpperCase().contains(query.toUpperCase())) {
                 matches.add(words.get(i));
                 sort.add(words.get(i).getWord().indexOf(query));
                 sorted.add(words.get(i).getWord().indexOf(query));

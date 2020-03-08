@@ -6,12 +6,16 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import dict.*;
+import javafx.scene.input.KeyEvent;
 
 import javax.swing.JCheckBox;
 import javax.swing.JList;
@@ -19,6 +23,8 @@ import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyListener;
 import java.awt.Font;
 import java.awt.SystemColor;
 import javax.swing.UIManager;
@@ -92,7 +98,10 @@ public class App {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Add a word!");
 				// TODO add button action here
-				if (status == Status.ADD) setMain(Status.WORD);
+				if (status == Status.ADD) {
+					setWordPanel();
+					setMain(Status.WORD);
+				}
 				else setMain(Status.ADD);
 			}
 		});
@@ -112,12 +121,12 @@ public class App {
 
 		search = new JTextField();
 		// PromptSupport.setPrompt("Search", txtSearch);
-		search.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Doing stuff here...");
-				// TODO search bar action here
-			}
-		});
+		// search.addActionListener(new ActionListener() {
+		// 	public void actionPerformed(ActionEvent e) {
+		// 		System.out.println("Doing stuff here...");
+		// 		// TODO search bar action here
+		// 	}
+		// });
 		search.setBounds(10, 67, 230, 31);
 		sideBar.add(search);
 		search.setColumns(10);
@@ -140,6 +149,61 @@ public class App {
 		main.setBounds(270, 11, 708, 444);
 		frame.getContentPane().add(main);
 		main.setLayout(null);
+
+		asc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		dec.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+
+		search.getDocument().addDocumentListener(new DocumentListener(){
+			public void changedUpdate(DocumentEvent e) {
+				if (search.getText().isEmpty()) updateSideBar();
+                search();
+            }
+            public void removeUpdate(DocumentEvent e) {
+				if (search.getText().isEmpty()) updateSideBar();
+                search();
+            }
+            public void insertUpdate(DocumentEvent e) {
+				if (search.getText().isEmpty()) updateSideBar();
+                search();
+			}
+			public void search() {
+				// TODO search bar display here
+				ArrayList<Word> matches = Word.findMatches(search.getText());
+				DefaultListModel<String> display = new DefaultListModel<>();
+				for (int i = 0; i < matches.size(); i++) {
+					display.add(i, matches.get(i).getWord());
+				}
+				JList<String> searchDisplay = new JList<>(display);
+				updateSideBar(searchDisplay);
+
+				System.out.println("Searching!");
+			}
+		});
+
+		// search.addKeyListener(new KeyAdapter() {
+		// 	public void keyTyped(KeyEvent e) {
+		// 		// TODO search actions here
+		// 		System.out.println("Typinggg");
+		// 	}
+		// });
+
+		// search.addKeyListener(new KeyListener() {
+		// 	public void keyTyped(KeyEvent e) {
+
+		// 	}
+		// 	public void keyPressed(KeyEvent e) {
+
+		// 	}
+		// 	public void keyReleased(KeyEvent e) {
+
+		// 	}
+		// });
 
 		setWordPanel();
 		setAddPanel();
@@ -446,6 +510,7 @@ public class App {
 				// TODO UPDATE THE FREAKING SIDEBAR, GODDAMNIT
 				updateSideBar();
 				// change add view to word view
+				setWordPanel();
 				setMain(Status.WORD);
 			}
 		});
@@ -453,6 +518,17 @@ public class App {
 
 	public void updateSideBar() {
 		list = new JList<>(Word.getWordMenu());
+		sideBar.remove(sideBarScroll);
+		sideBar.updateUI();
+		sideBarScroll = new JScrollPane(list);
+		sideBarScroll.setBounds(10, 143, 230, 301);
+		sideBarScroll.updateUI();
+		sideBar.add(sideBarScroll);
+		sideBar.updateUI();
+	}
+
+	public void updateSideBar(JList<String> replaceList) {
+		list = replaceList;
 		sideBar.remove(sideBarScroll);
 		sideBar.updateUI();
 		sideBarScroll = new JScrollPane(list);
@@ -527,12 +603,12 @@ public class App {
 
 		confirmNo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO add cancellation action here
 				list.clearSelection();
 				list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 				list.updateUI();
 				// TODO update side bar?? yes
 				updateSideBar();
+				setWordPanel();
 				setMain(Status.WORD); // TODO insert
 				System.out.println("Nope, we ain't removing no words");
 			}
