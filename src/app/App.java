@@ -15,7 +15,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import dict.*;
-import javafx.scene.input.KeyEvent;
 
 import javax.swing.JCheckBox;
 import javax.swing.JList;
@@ -24,8 +23,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyListener;
 import java.awt.Font;
 import java.awt.SystemColor;
 import javax.swing.UIManager;
@@ -101,7 +98,6 @@ public class App {
 		add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Add a word!");
-				// TODO add button action here
 				if (status == Status.ADD) {
 					setWordPanel();
 					setMain(Status.WORD);
@@ -119,7 +115,6 @@ public class App {
 		remove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Remove a word!!");
-				// TODO remove button action here
 				if (status == Status.REMOVE) {
 					setWordPanel();
 					list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -135,13 +130,7 @@ public class App {
 		sideBar.add(remove);
 
 		search = new JTextField();
-		// PromptSupport.setPrompt("Search", txtSearch);
-		// search.addActionListener(new ActionListener() {
-		// 	public void actionPerformed(ActionEvent e) {
-		// 		System.out.println("Doing stuff here...");
-		// 		// TODO search bar action here
-		// 	}
-		// });
+		// TODO impose search in the background of the search bar
 		search.setBounds(10, 67, 230, 31);
 		sideBar.add(search);
 		search.setColumns(10);
@@ -222,7 +211,6 @@ public class App {
 				search();
 			}
 			public void search() {
-				// TODO search bar display here
 				ArrayList<Word> matches = Word.findMatches(search.getText());
 				DefaultListModel<String> display = new DefaultListModel<>();
 				for (int i = 0; i < matches.size(); i++) {
@@ -234,25 +222,6 @@ public class App {
 				System.out.println("Searching!");
 			}
 		});
-
-		// search.addKeyListener(new KeyAdapter() {
-		// 	public void keyTyped(KeyEvent e) {
-		// 		// TODO search actions here
-		// 		System.out.println("Typinggg");
-		// 	}
-		// });
-
-		// search.addKeyListener(new KeyListener() {
-		// 	public void keyTyped(KeyEvent e) {
-
-		// 	}
-		// 	public void keyPressed(KeyEvent e) {
-
-		// 	}
-		// 	public void keyReleased(KeyEvent e) {
-
-		// 	}
-		// });
 
 		setWordPanel();
 		setAddPanel();
