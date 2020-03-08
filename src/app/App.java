@@ -293,10 +293,7 @@ public class App {
 		defText.setHorizontalAlignment(SwingConstants.LEFT);
 		defText.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		defText.setBackground(UIManager.getColor("Panel.background"));
-		// defText.setEditable(false);
 		defText.setText("No definitions");
-		// defText.setBounds(10, 91, 686, 122);
-		// wordPanel.add(defText);
 
 		JScrollPane defScroll = new JScrollPane(defText);
 		defScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -314,7 +311,6 @@ public class App {
 		synText.setBackground(UIManager.getColor("Panel.background"));
 		synText.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		synText.setBackground(UIManager.getColor("Panel.background"));
-		// synText.setEditable(false);
 		synText.setText("No synonyms");
 
 		JScrollPane synScroll = new JScrollPane(synText);
