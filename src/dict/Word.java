@@ -12,6 +12,8 @@ import javax.swing.DefaultListModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import app.App;
+
 public class Word {
 
     private static String filePath = "Dictionary/words/words.json"; // alter to from where the program is being run
@@ -32,7 +34,8 @@ public class Word {
     public static void addWord(Word word) {
         if (findWord(word.getWord()) != null) {
             System.out.println("\nCannot create duplicate word.\n");
-            return; // TODO show error in application THIS ONE IMPORTANT not the other
+            App.showError("Cannot create duplicate word.");
+            return;
         }
         words.add(word);
         words = sortWords(words);
@@ -55,7 +58,8 @@ public class Word {
                 return false;
             }
         }
-        System.out.println("\nWord deletion unsuccessful.\n"); // TODO put error in display
+        System.out.println("\nWord deletion unsuccessful.\n");
+        App.showError("Word deletion unsuccessful");
         return true;
     }
 
@@ -245,7 +249,8 @@ public class Word {
             write.close();
             System.out.println("\nSaving data successful.\n");
         } catch (IOException e) {
-            System.out.println("\nSaving data unsuccessful.\n"); // TODO show error in applications
+            System.out.println("\nSaving data unsuccessful.\n");
+            App.showError("Saving data unsuccessful");
             e.printStackTrace();
         }
     }

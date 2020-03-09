@@ -18,6 +18,7 @@ import dict.*;
 
 import javax.swing.JCheckBox;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
@@ -34,7 +35,7 @@ import javax.swing.ListSelectionModel;
 
 public class App {
 
-	private JFrame frame;
+	private static JFrame frame;
 	private JTextField search;
 
 	private JPanel main;
@@ -654,5 +655,9 @@ public class App {
 				System.out.println("Nope, we ain't removing no words");
 			}
 		});
+	}
+
+	public static void showError(String message) {
+		JOptionPane.showMessageDialog(frame, message);
 	}
 }
