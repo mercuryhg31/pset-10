@@ -269,6 +269,7 @@ public class App {
 
 			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+			setWordPanel();
 			main.add(wordPanel);
 			wordPanel.updateUI();
 		} else if (what == Status.ADD) {
@@ -276,6 +277,7 @@ public class App {
 
 			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+			setAddPanel();
 			main.add(addPanel);
 			addPanel.updateUI();
 		} else if (what == Status.REMOVE) {
@@ -283,6 +285,7 @@ public class App {
 
 			list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
+			setRemovePanel();
 			main.add(removePanel);
 			removePanel.updateUI();
 		}
