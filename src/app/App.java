@@ -237,12 +237,16 @@ public class App {
 			}
 		});
 
+
 		setWordPanel();
 		setAddPanel();
 		setRemovePanel();
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list.addListSelectionListener(listListener);
 
 		setMain(Status.WORD);
+		// setMain(Status.ADD);
+		// setMain(Status.WORD);
 	}
 
 	public void setMain(Status what) {
@@ -258,6 +262,10 @@ public class App {
 		}
 		if (what == Status.WORD) {
 			status = Status.WORD;
+
+			list.addListSelectionListener(listListener);
+			System.out.println("Added list listener");
+
 			main.add(wordPanel);
 			wordPanel.updateUI();
 		} else if (what == Status.ADD) {
@@ -346,8 +354,6 @@ public class App {
 				antText.setText(Word.outputAntonyms(list.getSelectedValue()));
 			}
 		};
-
-		list.addListSelectionListener(listListener);
 	}
 
 	public void setAddPanel() {
@@ -495,6 +501,7 @@ public class App {
 			public void actionPerformed(ActionEvent e) {
 				synonyms.add(synonym.getText());
 				update();
+				synonym.setText("");
 				System.out.println("new synonym");
 			}
 			private void update() {
@@ -508,6 +515,7 @@ public class App {
 			public void actionPerformed(ActionEvent e) {
 				antonyms.add(antonym.getText());
 				update();
+				antonym.setText("");
 				System.out.println("new antonym");
 			}
 			private void update() {
@@ -544,13 +552,18 @@ public class App {
 		if (asc.isSelected()) {
 			System.out.println("Ascending selected");
 			asc.doClick();
+			asc.doClick();
 			// ascAction.actionPerformed(new ActionEvent()); TODO kill myself
-			asc.setSelected(true);
+			// asc.setSelected(true);
 		}
 		if (dec.isSelected()) {
 			System.out.println("Descending selected");
 			dec.doClick();
-			dec.setSelected(true);
+			dec.doClick();
+			// dec.setSelected(true);
+		}
+		if (status == Status.WORD) {
+			list.addListSelectionListener(listListener);
 		}
 		sideBar.remove(sideBarScroll);
 		sideBar.updateUI();
@@ -572,6 +585,9 @@ public class App {
 			System.out.println("Descending selected");
 			dec.doClick();
 			dec.setSelected(true);
+		}
+		if (status == Status.WORD) {
+			list.addListSelectionListener(listListener);
 		}
 		sideBar.remove(sideBarScroll);
 		sideBar.updateUI();
