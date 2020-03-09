@@ -228,6 +228,8 @@ public class App {
 				}
 				JList<String> searchDisplay = new JList<>(display);
 				updateSideBar(searchDisplay);
+				asc.setSelected(false);
+				dec.setSelected(false);
 
 				if (status == Status.WORD) {
 					list.addListSelectionListener(listListener);
@@ -549,19 +551,19 @@ public class App {
 
 	public void updateSideBar() {
 		list = new JList<>(Word.getWordMenu());
-		if (asc.isSelected()) {
-			System.out.println("Ascending selected");
-			asc.doClick();
-			asc.doClick();
-			// ascAction.actionPerformed(new ActionEvent()); TODO kill myself
-			// asc.setSelected(true);
-		}
-		if (dec.isSelected()) {
-			System.out.println("Descending selected");
-			dec.doClick();
-			dec.doClick();
-			// dec.setSelected(true);
-		}
+		// if (asc.isSelected()) {
+		// 	System.out.println("Ascending selected");
+		// 	asc.doClick();
+		// 	asc.doClick();
+		// 	// ascAction.actionPerformed(new ActionEvent()); TODO kill myself
+		// 	// asc.setSelected(true);
+		// }
+		// if (dec.isSelected()) {
+		// 	System.out.println("Descending selected");
+		// 	dec.doClick();
+		// 	dec.doClick();
+		// 	// dec.setSelected(true);
+		// }
 		if (status == Status.WORD) {
 			list.addListSelectionListener(listListener);
 		}
@@ -576,16 +578,16 @@ public class App {
 
 	public void updateSideBar(JList<String> replaceList) {
 		list = replaceList;
-		if (asc.isSelected()) {
-			System.out.println("Ascending selected");
-			asc.doClick(); // TODO this doesn't workkkk
-			asc.setSelected(true);
-		}
-		if (dec.isSelected()) {
-			System.out.println("Descending selected");
-			dec.doClick();
-			dec.setSelected(true);
-		}
+		// if (asc.isSelected()) {
+		// 	System.out.println("Ascending selected");
+		// 	asc.doClick(); // TODO this doesn't workkkk
+		// 	asc.setSelected(true);
+		// }
+		// if (dec.isSelected()) {
+		// 	System.out.println("Descending selected");
+		// 	dec.doClick();
+		// 	dec.setSelected(true);
+		// }
 		if (status == Status.WORD) {
 			list.addListSelectionListener(listListener);
 		}
