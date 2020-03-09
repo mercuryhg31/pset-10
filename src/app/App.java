@@ -544,6 +544,7 @@ public class App {
 		if (asc.isSelected()) {
 			System.out.println("Ascending selected");
 			asc.doClick();
+			// ascAction.actionPerformed(new ActionEvent()); TODO kill myself
 			asc.setSelected(true);
 		}
 		if (dec.isSelected()) {
