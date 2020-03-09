@@ -529,7 +529,10 @@ public class App {
 
 		addWord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (newWord.getText().isEmpty() || definitions.isEmpty()) return;
+				if (newWord.getText().isEmpty() || definitions.isEmpty()) {
+					showError("You need to at least have a new word and one definition");
+					return;
+				}
 				Word word = new Word(newWord.getText(), definitions, synonyms, antonyms);
 				defDisplay = "<html>"; defNum = 0;
 				synDisplay = "<html>"; synNum = 0;
@@ -641,8 +644,12 @@ public class App {
 
 		removeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<String> selections = (ArrayList<String>) list.getSelectedValuesList();
-				// if (selections.isEmpty()) return;
+				try {
+					ArrayList<String> selections = (ArrayList<String>) list.getSelectedValuesList();
+				} catch (Exception ef) {
+					showError("You need to select at least one word");
+					return;
+				}
 				removePanel.add(confirmMssg);
 				removePanel.add(confirmYes);
 				removePanel.add(confirmNo);
@@ -653,7 +660,13 @@ public class App {
 
 		confirmYes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<String> selections = (ArrayList<String>) list.getSelectedValuesList();
+				ArrayList<String> selections;
+				try {
+					selections = (ArrayList<String>) list.getSelectedValuesList();
+				} catch (Exception ef) {
+					showError("You need to select at least one word");
+					return;
+				}
 				for (String selection: selections) {
 					Word.deleteWord(selection);
 				}
