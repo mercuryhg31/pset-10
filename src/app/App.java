@@ -239,7 +239,6 @@ public class App {
 			}
 		});
 
-
 		setWordPanel();
 		setAddPanel();
 		setRemovePanel();
@@ -268,14 +267,22 @@ public class App {
 			list.addListSelectionListener(listListener);
 			System.out.println("Added list listener");
 
+			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
 			main.add(wordPanel);
 			wordPanel.updateUI();
 		} else if (what == Status.ADD) {
 			status = Status.ADD;
+
+			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
 			main.add(addPanel);
 			addPanel.updateUI();
 		} else if (what == Status.REMOVE) {
 			status = Status.REMOVE;
+
+			list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
 			main.add(removePanel);
 			removePanel.updateUI();
 		}
@@ -350,6 +357,7 @@ public class App {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				System.out.println("Oooooo, selectionss..");
+				list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 				wordL.setText(list.getSelectedValue());
 				defText.setText(Word.outputDefinitions(list.getSelectedValue()));
 				synText.setText(Word.outputSynonyms(list.getSelectedValue()));
