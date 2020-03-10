@@ -367,6 +367,7 @@ public class App {
 				antText.setText(Word.outputAntonyms(list.getSelectedValue()));
 			}
 		};
+		list.addListSelectionListener(listListener);
 	}
 
 	public void setAddPanel() {
